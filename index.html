@@ -61,7 +61,7 @@
     .nav-pill.live {
       background: rgba(140,21,21,0.15);
       border: 1px solid rgba(140,21,21,0.4);
-      color: var(--green);
+      color: var(--red);
     }
     .nav-pill.my {
       background: linear-gradient(135deg,var(--red),var(--red2));
@@ -106,8 +106,7 @@
     }
     .hero h1 em {
       font-style: normal;
-      color: #fff;
-      
+      background:linear-gradient(90deg,#fff,#FFD0D0); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
     }
     .hero p {
       font-size: 1rem; color: rgba(255,255,255,0.65);
@@ -115,7 +114,7 @@
     }
     .live-strip {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(140,21,21,0.07);
       border-radius: 50px; padding: 9px 18px;
       font-size: 0.85rem; font-weight: 700; margin-bottom: 28px;
     }
@@ -139,7 +138,7 @@
       padding: 14px 28px; border: 1.5px solid rgba(255,255,255,0.25);
       border-radius: 50px; cursor: pointer; transition: background .15s;
     }
-    .btn-secondary:hover { background:rgba(255,255,255,0.17); }
+    .btn-secondary:hover { background:rgba(140,21,21,0.06); }
 
     /* ── SECTION ── */
     .section { padding: 0 18px 48px; max-width: 640px; margin: 0 auto; }
@@ -153,8 +152,8 @@
       letter-spacing: 0.14em; text-transform: uppercase;
       color: var(--muted);
     }
-    .section-title.hot { color: #FFAAAA; }
-    .section-title.gold { color: #FFAAAA; }
+    .section-title.hot { color: var(--red); }
+    .section-title.gold { color: var(--red); }
 
     /* ── GAME CARDS ── */
     .game-card {
@@ -167,14 +166,14 @@
       transition: border-color .2s, transform .15s, box-shadow .15s;
     }
     .game-card:hover {
-      border-background: linear-gradient(90deg,var(--red),var(--red2)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+      border-color: var(--red);
       transform: translateY(-2px);
       box-shadow: 0 8px 24px rgba(140,21,21,.25);
     }
     .flag-box {
       font-size: 2.4rem;
       width: 58px; height: 58px;
-      background: rgba(255,255,255,0.07);
+      background: rgba(140,21,21,0.08);
       border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
@@ -193,7 +192,7 @@
     }
     .game-meta { font-size: 0.75rem; color: var(--muted); }
     .game-rule-hint {
-      font-size: 0.68rem; color: rgba(255,180,180,0.8);
+      font-size: 0.68rem; color: var(--red);
       margin-top: 4px; font-weight: 700;
     }
     .game-right { text-align: right; flex-shrink: 0; }
@@ -217,13 +216,13 @@
       cursor: pointer; transition: all .15s;
     }
     .pill:hover, .pill.active {
-      background: rgba(255,59,92,0.15);
-      border-color: var(--red); color: #FFAAAA;
+      background: linear-gradient(135deg,var(--red),var(--red2));
+      border-color: var(--red); color: #fff;
     }
 
     /* ── DIVIDER ── */
     .divider {
-      border: none; border-top: 1px solid rgba(255,255,255,0.06);
+      border: none; border-top: 1px solid rgba(140,21,21,0.12);
       margin: 0 18px 44px; max-width: 604px;
       margin-left: auto; margin-right: auto;
     }
@@ -234,15 +233,14 @@
       gap: 10px; margin-bottom: 22px;
     }
     .stat-box {
-      background: linear-gradient(135deg, rgba(140,21,21,0.2), rgba(255,107,43,0.08));
-      border: 1px solid rgba(140,21,21,0.25);
+      background: linear-gradient(135deg,var(--red),var(--red2));
+      border: none;
       border-radius: 14px; padding: 16px 10px; text-align: center;
     }
     .stat-num {
       font-family: 'Poppins', sans-serif;
       font-size: 2rem; font-weight: 800; line-height: 1;
-      background: linear-gradient(135deg, var(--yellow), var(--orange));
-      
+      color: #fff;
       margin-bottom: 4px;
     }
     .stat-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
@@ -256,7 +254,7 @@
     }
     .history-icon {
       font-size: 1.8rem; width: 48px; height: 48px;
-      background: rgba(255,255,255,0.07);
+      background: rgba(140,21,21,0.08);
       border-radius: 12px; display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
@@ -267,26 +265,26 @@
       font-size: 0.65rem; font-weight: 800;
       padding: 4px 10px; border-radius: 50px; white-space: nowrap;
     }
-    .h-tag.again { background:rgba(140,21,21,0.15); color:#FFAAAA; }
-    .h-tag.new   { background:rgba(255,255,255,0.08); color:#fff; }
+    .h-tag.again { background:linear-gradient(135deg,var(--red),var(--red2)); color:#fff; }
+    .h-tag.new   { background:rgba(140,21,21,0.08); color:var(--red); border:1px solid rgba(140,21,21,0.2); }
 
     .crew-label {
       font-size: 0.63rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: 0.08em; color: rgba(255,255,255,0.28); margin-bottom: 8px;
+      letter-spacing: 0.08em; color: rgba(140,21,21,0.5); margin-bottom: 8px;
     }
     .crew-row { display:flex; flex-wrap:wrap; gap:7px; }
     .crew-chip {
       display: flex; align-items: center; gap: 6px;
-      background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1);
+      background: #fff; border: 1.5px solid rgba(140,21,21,0.18);
       border-radius: 12px; padding: 8px 12px;
       font-size: 0.78rem; font-weight: 700;
       cursor: pointer; transition: all .15s;
       flex-direction: column; align-items: flex-start; min-width: 100px;
     }
     .crew-chip-top { display:flex; align-items:center; gap:6px; width:100%; }
-    .crew-chip:hover { background:rgba(140,21,21,0.2); border-color:var(--red); }
-    .crew-chip.again { border-color:rgba(140,21,21,0.4); }
-    .crew-chip.again:hover { background:rgba(255,255,255,0.08); }
+    .crew-chip:hover { background:rgba(140,21,21,0.08); border-color:var(--red); }
+    .crew-chip.again { border-color:var(--red); background:#fff3f3; }
+    .crew-chip.again:hover { background:rgba(140,21,21,0.08); }
     .avatar {
       width: 20px; height: 20px; border-radius: 50%;
       font-size: 0.62rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;
@@ -309,7 +307,7 @@
       display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
     .reconnect-notice p { font-size:0.78rem; color:var(--muted); line-height:1.5; }
-    .reconnect-notice p strong { color:#FFAAAA; }
+    .reconnect-notice p strong { color:var(--red); }
     .reconnect-btn {
       background: linear-gradient(135deg,var(--red),var(--red2));
       color: #fff; font-family:'Poppins',sans-serif;
@@ -342,8 +340,9 @@
     footer {
       text-align:center; padding:24px;
       font-size: 0.68rem; font-weight:700; letter-spacing:0.06em;
-      color: rgba(255,255,255,0.18);
-      border-top: 1px solid rgba(255,255,255,0.05);
+      color: #fff;
+      background: linear-gradient(135deg,var(--red),var(--red2));
+      border-top: none;
     }
 
     /* ── OVERLAY (shared) ── */
@@ -419,7 +418,7 @@
     .msg-to-info .met-at { font-size:0.72rem; color:var(--muted); }
     textarea {
       width:100%; background:rgba(255,255,255,0.06);
-      border:1.5px solid rgba(255,255,255,0.12); border-radius:12px;
+      border:1.5px solid rgba(140,21,21,0.2); border-radius:12px;
       color:#fff; font-family:'Nunito',sans-serif; font-size:0.9rem;
       padding:14px; resize:none; height:110px; margin-bottom:14px;
       outline:none; transition:border-color .15s;
@@ -432,7 +431,7 @@
       border-radius:50px; padding:6px 12px; font-size:0.75rem; font-weight:700;
       cursor:pointer; transition:all .15s;
     }
-    .qm:hover { background:rgba(255,59,92,0.15); border-color:var(--red); color:#FFAAAA; }
+    .qm:hover { background:rgba(255,59,92,0.15); border-color:var(--red); color:var(--red); }
     .send-btn {
       width:100%; background:var(--red);
       color:#fff; font-family:'Poppins',sans-serif; font-weight:800; font-size:1rem;
@@ -476,7 +475,7 @@
 
     .temp-big {
       text-align: center;
-      background: rgba(255,255,255,0.05);
+      background: rgba(140,21,21,0.05);
       border-radius: 16px; padding: 20px 16px; margin-bottom: 18px;
     }
     .temp-num {
@@ -503,8 +502,8 @@
       border-radius:50px; padding:7px 13px; font-size:0.78rem; font-weight:700;
       cursor:pointer; transition:all .15s;
     }
-    .vote-chip:hover { background:rgba(140,21,21,0.15); border-color:#FFAAAA; color:#FFAAAA; }
-    .vote-chip.voted { background:rgba(140,21,21,0.15); border-color:#FFAAAA; color:#FFAAAA; }
+    .vote-chip:hover { background:rgba(140,21,21,0.15); border-color:var(--red); color:var(--red); }
+    .vote-chip.voted { background:rgba(140,21,21,0.15); border-color:var(--red); color:var(--red); }
 
     /* sent state */
     .sent-msg {
@@ -673,23 +672,23 @@
     <div class="crew-label">Tap a player — check manner temp or send a message</div>
     <div class="crew-row">
       <div class="crew-chip again" onclick="openManner('RedFox42','🦊','linear-gradient(135deg,#FF6B6B,#FF4D8D)','경찰과 도둑 · June 18',38.5)">
-        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#FF6B6B,#FF4D8D)">🦊</div> RedFox42 <span style="margin-left:auto;font-size:0.65rem;color:#FFAAAA">🔥38.5°</span></div>
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#FF6B6B,#FF4D8D)">🦊</div> RedFox42 <span style="margin-left:auto;font-size:0.65rem;color:var(--red)">🔥38.5°</span></div>
         <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:82%;background:linear-gradient(90deg,#8C1515,#B83A4B)"></div></div>
       </div>
       <div class="crew-chip again" onclick="openManner('BlueWhale','🐋','linear-gradient(135deg,#4DABF7,#845EF7)','경찰과 도둑 · June 18',37.2)">
-        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#4DABF7,#845EF7)">🐋</div> BlueWhale <span style="margin-left:auto;font-size:0.65rem;color:#FFCCCC">⭐37.2°</span></div>
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#4DABF7,#845EF7)">🐋</div> BlueWhale <span style="margin-left:auto;font-size:0.65rem;color:var(--red)">⭐37.2°</span></div>
         <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:65%;background:linear-gradient(90deg,#8C1515,#B83A4B)"></div></div>
       </div>
       <div class="crew-chip" onclick="openManner('GreenLeaf','🌿','linear-gradient(135deg,#51CF66,#20C997)','경찰과 도둑 · June 18',36.5)">
-        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#51CF66,#20C997)">🌿</div> GreenLeaf <span style="margin-left:auto;font-size:0.65rem;color:#FFE0E0">😊36.5°</span></div>
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#51CF66,#20C997)">🌿</div> GreenLeaf <span style="margin-left:auto;font-size:0.65rem;color:#B83A4B">😊36.5°</span></div>
         <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:50%;background:linear-gradient(90deg,#8C1515,#B83A4B)"></div></div>
       </div>
       <div class="crew-chip" onclick="openManner('SilverMoon','🌙','linear-gradient(135deg,#FFD43B,#FF6B35)','경찰과 도둑 · June 18',39.1)">
-        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#FFD43B,#FF6B35)">🌙</div> SilverMoon <span style="margin-left:auto;font-size:0.65rem;color:#FF8888">🌡️39.1°</span></div>
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#FFD43B,#FF6B35)">🌙</div> SilverMoon <span style="margin-left:auto;font-size:0.65rem;color:var(--red)">🌡️39.1°</span></div>
         <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:93%;background:linear-gradient(90deg,#8C1515,#B83A4B)"></div></div>
       </div>
       <div class="crew-chip" onclick="openManner('CosmicP','🪐','linear-gradient(135deg,#cc5de8,#845ef7)','경찰과 도둑 · June 18',37.8)">
-        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#cc5de8,#845ef7)">🪐</div> CosmicP <span style="margin-left:auto;font-size:0.65rem;color:#FFCCCC">⭐37.8°</span></div>
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#cc5de8,#845ef7)">🪐</div> CosmicP <span style="margin-left:auto;font-size:0.65rem;color:var(--red)">⭐37.8°</span></div>
         <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:72%;background:linear-gradient(90deg,#8C1515,#B83A4B)"></div></div>
       </div>
     </div>
@@ -712,19 +711,19 @@
     <div class="crew-label">Tap a player — check manner temp or send a message</div>
     <div class="crew-row">
       <div class="crew-chip" onclick="openManner('TigerSun','🦁','linear-gradient(135deg,#FF6B35,#F03E3E)','Daruma · June 12',37.4)">
-        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#FF6B35,#F03E3E)">🦁</div> TigerSun <span style="margin-left:auto;font-size:0.65rem;color:#FFCCCC">⭐37.4°</span></div>
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#FF6B35,#F03E3E)">🦁</div> TigerSun <span style="margin-left:auto;font-size:0.65rem;color:var(--red)">⭐37.4°</span></div>
         <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:60%;background:linear-gradient(90deg,#8C1515,#B83A4B)"></div></div>
       </div>
       <div class="crew-chip" onclick="openManner('IceBear','❄️','linear-gradient(135deg,#4DABF7,#1c7ed6)','Daruma · June 12',36.2)">
-        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#4DABF7,#1c7ed6)">❄️</div> IceBear <span style="margin-left:auto;font-size:0.65rem;color:#FFE0E0">😊36.2°</span></div>
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#4DABF7,#1c7ed6)">❄️</div> IceBear <span style="margin-left:auto;font-size:0.65rem;color:#B83A4B">😊36.2°</span></div>
         <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:40%;background:linear-gradient(90deg,#8C1515,#B83A4B)"></div></div>
       </div>
       <div class="crew-chip" onclick="openManner('OrangeZest','🍊','linear-gradient(135deg,#ff922b,#ffd43b)','Daruma · June 12',38.0)">
-        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#ff922b,#ffd43b)">🍊</div> OrangeZest <span style="margin-left:auto;font-size:0.65rem;color:#FFAAAA">🔥38.0°</span></div>
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#ff922b,#ffd43b)">🍊</div> OrangeZest <span style="margin-left:auto;font-size:0.65rem;color:var(--red)">🔥38.0°</span></div>
         <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:75%;background:linear-gradient(90deg,#8C1515,#B83A4B)"></div></div>
       </div>
       <div class="crew-chip" onclick="openManner('WaveRider','🌊','linear-gradient(135deg,#63e6be,#20c997)','Daruma · June 12',37.0)">
-        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#63e6be,#20c997)">🌊</div> WaveRider <span style="margin-left:auto;font-size:0.65rem;color:#FFE0E0">😊37.0°</span></div>
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#63e6be,#20c997)">🌊</div> WaveRider <span style="margin-left:auto;font-size:0.65rem;color:#B83A4B">😊37.0°</span></div>
         <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:55%;background:linear-gradient(90deg,#8C1515,#B83A4B)"></div></div>
       </div>
     </div>
@@ -743,15 +742,15 @@
     <div class="crew-label">Tap a player — check manner temp or send a message</div>
     <div class="crew-row">
       <div class="crew-chip again" onclick="openManner('GreenLeaf','🌿','linear-gradient(135deg,#51CF66,#20C997)','Amarelinha · June 5',36.5)">
-        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#51CF66,#20C997)">🌿</div> GreenLeaf <span style="margin-left:auto;font-size:0.65rem;color:#FFE0E0">😊36.5°</span></div>
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#51CF66,#20C997)">🌿</div> GreenLeaf <span style="margin-left:auto;font-size:0.65rem;color:#B83A4B">😊36.5°</span></div>
         <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:50%;background:linear-gradient(90deg,#8C1515,#B83A4B)"></div></div>
       </div>
       <div class="crew-chip" onclick="openManner('NightOwl','🔮','linear-gradient(135deg,#845ef7,#cc5de8)','Amarelinha · June 5',38.8)">
-        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#845ef7,#cc5de8)">🔮</div> NightOwl <span style="margin-left:auto;font-size:0.65rem;color:#FFAAAA">🔥38.8°</span></div>
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#845ef7,#cc5de8)">🔮</div> NightOwl <span style="margin-left:auto;font-size:0.65rem;color:var(--red)">🔥38.8°</span></div>
         <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:88%;background:linear-gradient(90deg,#8C1515,#B83A4B)"></div></div>
       </div>
       <div class="crew-chip" onclick="openManner('CherryBomb','🍒','linear-gradient(135deg,#f03e3e,#ff6b6b)','Amarelinha · June 5',37.6)">
-        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#f03e3e,#ff6b6b)">🍒</div> CherryBomb <span style="margin-left:auto;font-size:0.65rem;color:#FFCCCC">⭐37.6°</span></div>
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#f03e3e,#ff6b6b)">🍒</div> CherryBomb <span style="margin-left:auto;font-size:0.65rem;color:var(--red)">⭐37.6°</span></div>
         <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:68%;background:linear-gradient(90deg,#8C1515,#B83A4B)"></div></div>
       </div>
     </div>
@@ -981,11 +980,11 @@
           <div class="temp-bar-wrap"><div class="temp-bar" style="width:${pct+5}%;background:var(--red)"></div></div>
         </div>
         <div class="manner-cat">
-          <div class="manner-cat-top"><span>🤝 Teamwork</span><span class="manner-cat-score" style="color:#FFCCCC">${(temp+0.3).toFixed(1)}°</span></div>
+          <div class="manner-cat-top"><span>🤝 Teamwork</span><span class="manner-cat-score" style="color:var(--red)">${(temp+0.3).toFixed(1)}°</span></div>
           <div class="temp-bar-wrap"><div class="temp-bar" style="width:${Math.min(100,pct+12)}%;background:linear-gradient(90deg,#8C1515,#B83A4B)"></div></div>
         </div>
         <div class="manner-cat">
-          <div class="manner-cat-top"><span>😄 Fun Vibes</span><span class="manner-cat-score" style="color:#FFAAAA">${(temp-0.2).toFixed(1)}°</span></div>
+          <div class="manner-cat-top"><span>😄 Fun Vibes</span><span class="manner-cat-score" style="color:var(--red)">${(temp-0.2).toFixed(1)}°</span></div>
           <div class="temp-bar-wrap"><div class="temp-bar" style="width:${Math.max(20,pct-8)}%;background:linear-gradient(90deg,#8C1515,#B83A4B)"></div></div>
         </div>
       </div>
