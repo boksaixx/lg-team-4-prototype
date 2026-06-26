@@ -73,54 +73,60 @@
     .hero {
       position: relative;
       text-align: center;
-      padding: 70px 24px 50px;
-      min-height: 500px;
+      padding: 60px 24px 56px;
+      background: linear-gradient(160deg, #fff5f5 0%, #ffffff 50%, #fff0f0 100%);
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       overflow: hidden;
     }
-    .hero-bg {
-      position: absolute; inset: 0;
-      background-color: #3a0000;
-      background-image: url('https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=1400&auto=format&fit=crop&q=80');
-      background-size: cover; background-position: center 40%;
-      z-index: 0;
+    /* decorative blobs */
+    .hero::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle, rgba(140,21,21,0.12) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
     }
-    .hero-bg::after {
-      content: ''; position: absolute; inset: 0;
-      background: linear-gradient(to bottom, rgba(26,5,5,.45) 0%, rgba(26,5,5,.72) 55%, rgba(26,5,5,1) 100%);
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -60px; left: -60px;
+      width: 260px; height: 260px;
+      background: radial-gradient(circle, rgba(184,58,75,0.1) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none;
     }
     .hero > * { position: relative; z-index: 1; }
     .hero-tag {
       display: inline-block;
-      background: rgba(255,255,255,0.2);
-      border: 1px solid rgba(255,255,255,0.5);
-      color: #fff;
+      background: rgba(140,21,21,0.08);
+      border: 1px solid rgba(140,21,21,0.22);
+      color: var(--red);
       font-size: 0.72rem; font-weight: 800;
       letter-spacing: 0.12em; text-transform: uppercase;
-      padding: 6px 18px; border-radius: 50px; margin-bottom: 20px;
+      padding: 6px 18px; border-radius: 50px; margin-bottom: 24px;
     }
     .hero h1 {
       font-family: 'Poppins', sans-serif;
-      font-size: clamp(2rem, 6vw, 3.6rem);
-      font-weight: 800; line-height: 1.12; margin-bottom: 14px;
-      color: #fff;
+      font-size: clamp(2rem, 6vw, 3.4rem);
+      font-weight: 800; line-height: 1.15; margin-bottom: 16px;
+      color: #1C1C1C;
     }
     .hero h1 em {
       font-style: normal;
-      background:linear-gradient(90deg,#fff,#FFD0D0); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;
+      background: linear-gradient(90deg, var(--red), #E05080, #FF8C42);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .hero p {
-      font-size: 1rem; color: rgba(255,255,255,0.65);
-      max-width: 380px; margin: 0 auto 26px; line-height: 1.7;
+      font-size: 1rem; color: #555;
+      max-width: 360px; margin: 0 auto 28px; line-height: 1.75;
     }
     .live-strip {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.35);
+      background: #fff;
+      border: 1.5px solid rgba(140,21,21,0.2);
       border-radius: 50px; padding: 9px 18px;
       font-size: 0.85rem; font-weight: 700; margin-bottom: 28px;
-      color: #fff;
+      color: #1C1C1C;
+      box-shadow: 0 2px 12px rgba(140,21,21,0.1);
     }
     .pulse { width:8px; height:8px; background:var(--red); border-radius:50%; animation:pulse 1.4s infinite; }
     @keyframes pulse {
@@ -134,15 +140,16 @@
       font-weight: 700; font-size: 0.95rem;
       padding: 14px 28px; border: none; border-radius: 50px;
       cursor: pointer; transition: transform .15s, box-shadow .15s;
+      box-shadow: 0 4px 18px rgba(140,21,21,0.35);
     }
     .btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(140,21,21,.5); }
     .btn-secondary {
-      background: rgba(255,255,255,0.1); color: #fff;
+      background: #fff; color: var(--red);
       font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.95rem;
-      padding: 14px 28px; border: 1.5px solid rgba(255,255,255,0.25);
-      border-radius: 50px; cursor: pointer; transition: background .15s;
+      padding: 14px 28px; border: 1.5px solid rgba(140,21,21,0.35);
+      border-radius: 50px; cursor: pointer; transition: background .15s, box-shadow .15s;
     }
-    .btn-secondary:hover { background:rgba(140,21,21,0.06); }
+    .btn-secondary:hover { background: rgba(140,21,21,0.05); box-shadow: 0 4px 14px rgba(140,21,21,0.15); }
 
     /* ── SECTION ── */
     .section { padding: 0 18px 48px; max-width: 640px; margin: 0 auto; }
@@ -539,7 +546,6 @@
 
 <!-- HERO -->
 <div class="hero">
-  <div class="hero-bg"></div>
   <div class="hero-tag">No sign-up · No pressure · Just show up</div>
   <h1>Find your people.<br><em>Play like a kid again.</em></h1>
   <p>Spontaneous games from around the world — happening right now on campus. Join for an hour, leave whenever.</p>
