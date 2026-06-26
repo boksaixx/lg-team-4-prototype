@@ -85,8 +85,8 @@
     }
     .hero-bg {
       position: absolute; inset: 0;
-      background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&auto=format&fit=crop&q=80');
-      background-size: cover; background-position: center 30%;
+      background-image: url('https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=1400&auto=format&fit=crop&q=80');
+      background-size: cover; background-position: center 40%;
       z-index: 0;
     }
     .hero-bg::after {
@@ -281,12 +281,14 @@
     .crew-chip {
       display: flex; align-items: center; gap: 6px;
       background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1);
-      border-radius: 50px; padding: 5px 12px;
+      border-radius: 12px; padding: 8px 12px;
       font-size: 0.78rem; font-weight: 700;
       cursor: pointer; transition: all .15s;
+      flex-direction: column; align-items: flex-start; min-width: 100px;
     }
-    .crew-chip:hover { background:rgba(255,59,92,0.15); border-color:var(--red); }
-    .crew-chip.again { border-color:rgba(6,214,160,0.4); color:var(--green); }
+    .crew-chip-top { display:flex; align-items:center; gap:6px; width:100%; }
+    .crew-chip:hover { background:rgba(255,59,92,0.12); border-color:var(--red); }
+    .crew-chip.again { border-color:rgba(6,214,160,0.35); }
     .crew-chip.again:hover { background:rgba(6,214,160,0.1); }
     .avatar {
       width: 20px; height: 20px; border-radius: 50%;
@@ -440,6 +442,72 @@
       padding:15px; border:none; border-radius:12px; cursor:pointer;
     }
     .send-btn:hover { opacity:0.88; }
+
+    /* ── MANNER TEMP ── */
+    .temp-bar-wrap {
+      margin: 6px 0 4px;
+      height: 6px; border-radius: 3px;
+      background: rgba(255,255,255,0.1);
+      overflow: hidden;
+    }
+    .temp-bar {
+      height: 100%; border-radius: 3px;
+      transition: width .6s ease;
+    }
+    .temp-label {
+      font-size: 0.68rem; font-weight: 800;
+      letter-spacing: 0.02em;
+    }
+    .temp-cold   { color: #4CC9F0; }
+    .temp-warm   { color: #FFD23F; }
+    .temp-hot    { color: #FF6B2B; }
+    .temp-fire   { color: #FF3B5C; }
+
+    /* manner popup */
+    .manner-header {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 20px;
+    }
+    .manner-avatar-lg {
+      width: 54px; height: 54px; border-radius: 50%;
+      font-size: 1.6rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .manner-nickname { font-family:'Poppins',sans-serif; font-weight:800; font-size:1.1rem; }
+    .manner-sub { font-size:0.72rem; color:var(--muted); margin-top:2px; }
+
+    .temp-big {
+      text-align: center;
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px; padding: 20px 16px; margin-bottom: 18px;
+    }
+    .temp-num {
+      font-family:'Poppins',sans-serif; font-weight:900;
+      font-size: 2.8rem; line-height:1;
+    }
+    .temp-desc { font-size:0.8rem; color:var(--muted); margin-top:6px; }
+    .temp-emoji { font-size: 1.4rem; margin-bottom:4px; }
+
+    .manner-cats { display:flex; flex-direction:column; gap:12px; margin-bottom:20px; }
+    .manner-cat { }
+    .manner-cat-top {
+      display:flex; justify-content:space-between;
+      font-size:0.8rem; font-weight:700; margin-bottom:5px;
+    }
+    .manner-cat-score { font-weight:800; }
+
+    .vote-row {
+      display:flex; gap:8px; flex-wrap:wrap;
+    }
+    .vote-chip {
+      display:flex; align-items:center; gap:5px;
+      background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.1);
+      border-radius:50px; padding:7px 13px; font-size:0.78rem; font-weight:700;
+      cursor:pointer; transition:all .15s;
+    }
+    .vote-chip:hover { background:rgba(6,214,160,0.12); border-color:var(--green); color:var(--green); }
+    .vote-chip.voted { background:rgba(6,214,160,0.15); border-color:var(--green); color:var(--green); }
 
     /* sent state */
     .sent-msg {
@@ -605,32 +673,27 @@
       </div>
       <span class="h-tag again">2× played</span>
     </div>
-    <div class="crew-label">People you played with — tap to message</div>
+    <div class="crew-label">Tap a player — check manner temp or send a message</div>
     <div class="crew-row">
-      <div class="crew-chip again" onclick="openMsg('RedFox42','🦊','linear-gradient(135deg,#FF6B6B,#FF4D8D)','경찰과 도둑 · June 18')">
-        <div class="avatar" style="background:linear-gradient(135deg,#FF6B6B,#FF4D8D)">🦊</div>
-        RedFox42
-        <div class="msg-dot">💬</div>
+      <div class="crew-chip again" onclick="openManner('RedFox42','🦊','linear-gradient(135deg,#FF6B6B,#FF4D8D)','경찰과 도둑 · June 18',38.5)">
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#FF6B6B,#FF4D8D)">🦊</div> RedFox42 <span style="margin-left:auto;font-size:0.65rem;color:#FF6B2B">🔥38.5°</span></div>
+        <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:82%;background:linear-gradient(90deg,#FFD23F,#FF6B2B)"></div></div>
       </div>
-      <div class="crew-chip again" onclick="openMsg('BlueWhale','🐋','linear-gradient(135deg,#4DABF7,#845EF7)','경찰과 도둑 · June 18')">
-        <div class="avatar" style="background:linear-gradient(135deg,#4DABF7,#845EF7)">🐋</div>
-        BlueWhale
-        <div class="msg-dot">💬</div>
+      <div class="crew-chip again" onclick="openManner('BlueWhale','🐋','linear-gradient(135deg,#4DABF7,#845EF7)','경찰과 도둑 · June 18',37.2)">
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#4DABF7,#845EF7)">🐋</div> BlueWhale <span style="margin-left:auto;font-size:0.65rem;color:#FFD23F">⭐37.2°</span></div>
+        <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:65%;background:linear-gradient(90deg,#4CC9F0,#FFD23F)"></div></div>
       </div>
-      <div class="crew-chip" onclick="openMsg('GreenLeaf','🌿','linear-gradient(135deg,#51CF66,#20C997)','경찰과 도둑 · June 18')">
-        <div class="avatar" style="background:linear-gradient(135deg,#51CF66,#20C997)">🌿</div>
-        GreenLeaf
-        <div class="msg-dot">💬</div>
+      <div class="crew-chip" onclick="openManner('GreenLeaf','🌿','linear-gradient(135deg,#51CF66,#20C997)','경찰과 도둑 · June 18',36.5)">
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#51CF66,#20C997)">🌿</div> GreenLeaf <span style="margin-left:auto;font-size:0.65rem;color:#4CC9F0">😊36.5°</span></div>
+        <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:50%;background:linear-gradient(90deg,#4CC9F0,#51CF66)"></div></div>
       </div>
-      <div class="crew-chip" onclick="openMsg('SilverMoon','🌙','linear-gradient(135deg,#FFD43B,#FF6B35)','경찰과 도둑 · June 18')">
-        <div class="avatar" style="background:linear-gradient(135deg,#FFD43B,#FF6B35)">🌙</div>
-        SilverMoon
-        <div class="msg-dot">💬</div>
+      <div class="crew-chip" onclick="openManner('SilverMoon','🌙','linear-gradient(135deg,#FFD43B,#FF6B35)','경찰과 도둑 · June 18',39.1)">
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#FFD43B,#FF6B35)">🌙</div> SilverMoon <span style="margin-left:auto;font-size:0.65rem;color:#FF3B5C">🌡️39.1°</span></div>
+        <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:93%;background:linear-gradient(90deg,#FF6B2B,#FF3B5C)"></div></div>
       </div>
-      <div class="crew-chip" onclick="openMsg('CosmicP','🪐','linear-gradient(135deg,#cc5de8,#845ef7)','경찰과 도둑 · June 18')">
-        <div class="avatar" style="background:linear-gradient(135deg,#cc5de8,#845ef7)">🪐</div>
-        CosmicP
-        <div class="msg-dot">💬</div>
+      <div class="crew-chip" onclick="openManner('CosmicP','🪐','linear-gradient(135deg,#cc5de8,#845ef7)','경찰과 도둑 · June 18',37.8)">
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#cc5de8,#845ef7)">🪐</div> CosmicP <span style="margin-left:auto;font-size:0.65rem;color:#FFD23F">⭐37.8°</span></div>
+        <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:72%;background:linear-gradient(90deg,#4CC9F0,#FFD23F)"></div></div>
       </div>
     </div>
     <div class="reconnect-notice">
@@ -649,27 +712,23 @@
       </div>
       <span class="h-tag new">First time</span>
     </div>
-    <div class="crew-label">People you played with — tap to message</div>
+    <div class="crew-label">Tap a player — check manner temp or send a message</div>
     <div class="crew-row">
-      <div class="crew-chip" onclick="openMsg('TigerSun','🦁','linear-gradient(135deg,#FF6B35,#F03E3E)','Daruma · June 12')">
-        <div class="avatar" style="background:linear-gradient(135deg,#FF6B35,#F03E3E)">🦁</div>
-        TigerSun
-        <div class="msg-dot">💬</div>
+      <div class="crew-chip" onclick="openManner('TigerSun','🦁','linear-gradient(135deg,#FF6B35,#F03E3E)','Daruma · June 12',37.4)">
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#FF6B35,#F03E3E)">🦁</div> TigerSun <span style="margin-left:auto;font-size:0.65rem;color:#FFD23F">⭐37.4°</span></div>
+        <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:60%;background:linear-gradient(90deg,#4CC9F0,#FFD23F)"></div></div>
       </div>
-      <div class="crew-chip" onclick="openMsg('IceBear','❄️','linear-gradient(135deg,#4DABF7,#1c7ed6)','Daruma · June 12')">
-        <div class="avatar" style="background:linear-gradient(135deg,#4DABF7,#1c7ed6)">❄️</div>
-        IceBear
-        <div class="msg-dot">💬</div>
+      <div class="crew-chip" onclick="openManner('IceBear','❄️','linear-gradient(135deg,#4DABF7,#1c7ed6)','Daruma · June 12',36.2)">
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#4DABF7,#1c7ed6)">❄️</div> IceBear <span style="margin-left:auto;font-size:0.65rem;color:#4CC9F0">😊36.2°</span></div>
+        <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:40%;background:linear-gradient(90deg,#845EF7,#4CC9F0)"></div></div>
       </div>
-      <div class="crew-chip" onclick="openMsg('OrangeZest','🍊','linear-gradient(135deg,#ff922b,#ffd43b)','Daruma · June 12')">
-        <div class="avatar" style="background:linear-gradient(135deg,#ff922b,#ffd43b)">🍊</div>
-        OrangeZest
-        <div class="msg-dot">💬</div>
+      <div class="crew-chip" onclick="openManner('OrangeZest','🍊','linear-gradient(135deg,#ff922b,#ffd43b)','Daruma · June 12',38.0)">
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#ff922b,#ffd43b)">🍊</div> OrangeZest <span style="margin-left:auto;font-size:0.65rem;color:#FF6B2B">🔥38.0°</span></div>
+        <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:75%;background:linear-gradient(90deg,#FFD23F,#FF6B2B)"></div></div>
       </div>
-      <div class="crew-chip" onclick="openMsg('WaveRider','🌊','linear-gradient(135deg,#63e6be,#20c997)','Daruma · June 12')">
-        <div class="avatar" style="background:linear-gradient(135deg,#63e6be,#20c997)">🌊</div>
-        WaveRider
-        <div class="msg-dot">💬</div>
+      <div class="crew-chip" onclick="openManner('WaveRider','🌊','linear-gradient(135deg,#63e6be,#20c997)','Daruma · June 12',37.0)">
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#63e6be,#20c997)">🌊</div> WaveRider <span style="margin-left:auto;font-size:0.65rem;color:#4CC9F0">😊37.0°</span></div>
+        <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:55%;background:linear-gradient(90deg,#4CC9F0,#51CF66)"></div></div>
       </div>
     </div>
   </div>
@@ -684,22 +743,19 @@
       </div>
       <span class="h-tag new">First time</span>
     </div>
-    <div class="crew-label">People you played with — tap to message</div>
+    <div class="crew-label">Tap a player — check manner temp or send a message</div>
     <div class="crew-row">
-      <div class="crew-chip again" onclick="openMsg('GreenLeaf','🌿','linear-gradient(135deg,#51CF66,#20C997)','Amarelinha · June 5')">
-        <div class="avatar" style="background:linear-gradient(135deg,#51CF66,#20C997)">🌿</div>
-        GreenLeaf
-        <div class="msg-dot">💬</div>
+      <div class="crew-chip again" onclick="openManner('GreenLeaf','🌿','linear-gradient(135deg,#51CF66,#20C997)','Amarelinha · June 5',36.5)">
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#51CF66,#20C997)">🌿</div> GreenLeaf <span style="margin-left:auto;font-size:0.65rem;color:#4CC9F0">😊36.5°</span></div>
+        <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:50%;background:linear-gradient(90deg,#4CC9F0,#51CF66)"></div></div>
       </div>
-      <div class="crew-chip" onclick="openMsg('NightOwl','🔮','linear-gradient(135deg,#845ef7,#cc5de8)','Amarelinha · June 5')">
-        <div class="avatar" style="background:linear-gradient(135deg,#845ef7,#cc5de8)">🔮</div>
-        NightOwl
-        <div class="msg-dot">💬</div>
+      <div class="crew-chip" onclick="openManner('NightOwl','🔮','linear-gradient(135deg,#845ef7,#cc5de8)','Amarelinha · June 5',38.8)">
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#845ef7,#cc5de8)">🔮</div> NightOwl <span style="margin-left:auto;font-size:0.65rem;color:#FF6B2B">🔥38.8°</span></div>
+        <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:88%;background:linear-gradient(90deg,#FFD23F,#FF3B5C)"></div></div>
       </div>
-      <div class="crew-chip" onclick="openMsg('CherryBomb','🍒','linear-gradient(135deg,#f03e3e,#ff6b6b)','Amarelinha · June 5')">
-        <div class="avatar" style="background:linear-gradient(135deg,#f03e3e,#ff6b6b)">🍒</div>
-        CherryBomb
-        <div class="msg-dot">💬</div>
+      <div class="crew-chip" onclick="openManner('CherryBomb','🍒','linear-gradient(135deg,#f03e3e,#ff6b6b)','Amarelinha · June 5',37.6)">
+        <div class="crew-chip-top"><div class="avatar" style="background:linear-gradient(135deg,#f03e3e,#ff6b6b)">🍒</div> CherryBomb <span style="margin-left:auto;font-size:0.65rem;color:#FFD23F">⭐37.6°</span></div>
+        <div class="temp-bar-wrap" style="width:100%"><div class="temp-bar" style="width:68%;background:linear-gradient(90deg,#4CC9F0,#FFD23F)"></div></div>
       </div>
     </div>
   </div>
@@ -768,6 +824,14 @@
       <button class="modal-btn" onclick="closeAll();openJoinModal()">⚡ Join this game</button>
       <button class="modal-cancel" onclick="closeAll()">Close</button>
     </div>
+  </div>
+</div>
+
+<!-- Manner Temperature overlay -->
+<div class="overlay" id="ov-manner" onclick="closeAll(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div id="manner-content"></div>
   </div>
 </div>
 
@@ -884,6 +948,72 @@
         ${r.steps.map((s,i)=>`<li><div class="rule-num">${i+1}</div><span>${s}</span></li>`).join('')}
       </ul>`;
     open('ov-rules');
+  }
+
+  /* ── manner temperature ── */
+  function tempInfo(t) {
+    if (t >= 39)   return { emoji:'🔥', label:'Super Hot!', color:'#FF3B5C', pct: Math.min(100, (t-36)*33) };
+    if (t >= 38)   return { emoji:'🔥', label:'Warm & Friendly', color:'#FF6B2B', pct: (t-36)*33 };
+    if (t >= 37)   return { emoji:'⭐', label:'Good Manner', color:'#FFD23F', pct: (t-36)*33 };
+    if (t >= 36.5) return { emoji:'😊', label:'Decent Player', color:'#4CC9F0', pct: (t-36)*33 };
+    return               { emoji:'🧊', label:'Needs Warming Up', color:'#845EF7', pct: 10 };
+  }
+
+  function openManner(nickname, emoji, grad, metAt, temp) {
+    const ti = tempInfo(temp);
+    const pct = Math.round(ti.pct);
+    document.getElementById('manner-content').innerHTML = `
+      <div class="manner-header">
+        <div class="manner-avatar-lg" style="background:${grad}">${emoji}</div>
+        <div>
+          <div class="manner-nickname">${nickname}</div>
+          <div class="manner-sub">Met at ${metAt}</div>
+        </div>
+      </div>
+      <div class="temp-big">
+        <div class="temp-emoji">${ti.emoji}</div>
+        <div class="temp-num" style="color:${ti.color}">${temp}°C</div>
+        <div style="margin:12px 0 6px">
+          <div class="temp-bar-wrap"><div class="temp-bar" id="tm-bar" style="width:0%;background:linear-gradient(90deg,#4CC9F0,${ti.color})"></div></div>
+        </div>
+        <div class="temp-desc"><strong style="color:${ti.color}">${ti.label}</strong><br>Based on ${Math.floor(Math.random()*8+3)} game ratings</div>
+      </div>
+      <div class="manner-cats">
+        <div class="manner-cat">
+          <div class="manner-cat-top"><span>⚡ Energy & Enthusiasm</span><span class="manner-cat-score" style="color:${ti.color}">${(temp-0.5).toFixed(1)}°</span></div>
+          <div class="temp-bar-wrap"><div class="temp-bar" style="width:${pct+5}%;background:linear-gradient(90deg,#4CC9F0,${ti.color})"></div></div>
+        </div>
+        <div class="manner-cat">
+          <div class="manner-cat-top"><span>🤝 Teamwork</span><span class="manner-cat-score" style="color:#FFD23F">${(temp+0.3).toFixed(1)}°</span></div>
+          <div class="temp-bar-wrap"><div class="temp-bar" style="width:${Math.min(100,pct+12)}%;background:linear-gradient(90deg,#4CC9F0,#FFD23F)"></div></div>
+        </div>
+        <div class="manner-cat">
+          <div class="manner-cat-top"><span>😄 Fun Vibes</span><span class="manner-cat-score" style="color:#FF6B2B">${(temp-0.2).toFixed(1)}°</span></div>
+          <div class="temp-bar-wrap"><div class="temp-bar" style="width:${Math.max(20,pct-8)}%;background:linear-gradient(90deg,#FFD23F,#FF6B2B)"></div></div>
+        </div>
+      </div>
+      <p style="font-size:0.72rem;color:var(--muted);margin-bottom:12px;font-weight:700;text-transform:uppercase;letter-spacing:0.06em">Rate ${nickname} from today's game</p>
+      <div class="vote-row" id="vote-row">
+        <div class="vote-chip" onclick="castVote(this,'Great energy! ⚡')">⚡ Great energy</div>
+        <div class="vote-chip" onclick="castVote(this,'Fair play 🤝')">🤝 Fair play</div>
+        <div class="vote-chip" onclick="castVote(this,'So fun! 😄')">😄 So fun</div>
+        <div class="vote-chip" onclick="castVote(this,'Good sport 🏅')">🏅 Good sport</div>
+      </div>
+      <div style="display:flex;gap:8px;margin-top:16px">
+        <button class="send-btn" style="flex:1;font-size:0.85rem;padding:12px" onclick="openMsg('${nickname}','${emoji}','${grad}','${metAt}')">💬 Send Message</button>
+        <button class="modal-cancel" onclick="closeAll()" style="padding:12px 16px;border:1.5px solid rgba(255,255,255,0.15);border-radius:12px">Close</button>
+      </div>`;
+    open('ov-manner');
+    setTimeout(() => {
+      const bar = document.getElementById('tm-bar');
+      if (bar) bar.style.width = pct + '%';
+    }, 100);
+  }
+
+  function castVote(el, label) {
+    document.querySelectorAll('#vote-row .vote-chip').forEach(c => c.classList.remove('voted'));
+    el.classList.add('voted');
+    el.textContent = '✓ ' + label;
   }
 
   /* ── message modal ── */
