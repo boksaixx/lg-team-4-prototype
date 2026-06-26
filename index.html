@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlayPop — Just Show Up & Play</title>
+  <style>
+    :root {
+      --yellow: #FFD43B;
+      --orange: #FF6B35;
+      --pink:   #FF4D8D;
+      --blue:   #4DABF7;
+      --green:  #51CF66;
+      --dark:   #1a1a2e;
+      --card:   #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--dark);
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 28px;
+    }
+    .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: -1px; }
+    .logo span { color: var(--yellow); }
+    .nav-badge {
+      background: var(--pink);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 50px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(255,212,59,0.15);
+      border: 1px solid var(--yellow);
+      color: var(--yellow);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 6vw, 3.6rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--yellow), var(--orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 420px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+
+    /* live counter */
+    .live-strip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      margin-bottom: 36px;
+    }
+    .pulse {
+      width: 8px; height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 1.4s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(81,207,102,.6); }
+      50%      { box-shadow: 0 0 0 6px rgba(81,207,102,0); }
+    }
+
+    /* CTA buttons */
+    .cta-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--yellow), var(--orange));
+      color: #1a1a2e;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(255,107,53,.4); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 16px 32px;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.18); }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 20px;
+    }
+
+    /* ── GAME CARDS (active sessions) ── */
+    .section { padding: 0 20px 48px; max-width: 640px; margin: 0 auto; }
+
+    .game-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: background .15s, transform .15s;
+    }
+    .game-card:hover { background: rgba(255,255,255,0.1); transform: translateX(4px); }
+    .game-icon {
+      font-size: 2.2rem;
+      width: 56px; height: 56px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .game-info { flex: 1; }
+    .game-name { font-weight: 800; font-size: 1rem; margin-bottom: 4px; }
+    .game-meta { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+    .game-right { text-align: right; flex-shrink: 0; }
+    .join-btn {
+      background: var(--yellow);
+      color: #1a1a2e;
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-bottom: 6px;
+      white-space: nowrap;
+    }
+    .join-btn:hover { background: var(--orange); color: #fff; }
+    .countdown {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── GAME TYPE PILLS ── */
+    .pill-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+    .pill {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50px;
+      padding: 10px 18px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .pill:hover, .pill.active {
+      background: rgba(255,212,59,0.15);
+      border-color: var(--yellow);
+      color: var(--yellow);
+    }
+
+    /* ── HOW IT WORKS ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+    .step {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 24px 16px;
+      text-align: center;
+    }
+    .step-num {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--yellow), var(--orange));
+      color: #1a1a2e;
+      font-weight: 900;
+      font-size: 1rem;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 12px;
+    }
+    .step h3 { font-size: 0.95rem; font-weight: 800; margin-bottom: 6px; }
+    .step p  { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.25);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* ── MODAL overlay ── */
+    .overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 100;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .overlay.open { display: flex; }
+    .modal {
+      background: #16213e;
+      border-radius: 24px 24px 0 0;
+      padding: 32px 28px 40px;
+      width: 100%;
+      max-width: 480px;
+      animation: slideUp .25s ease;
+    }
+    @keyframes slideUp { from { transform: translateY(60px); opacity: 0; } }
+    .modal h2 { font-size: 1.4rem; font-weight: 900; margin-bottom: 8px; }
+    .modal p  { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 24px; line-height: 1.5; }
+    .modal-actions { display: flex; gap: 12px; flex-direction: column; }
+    .modal-btn {
+      background: linear-gradient(135deg, var(--yellow), var(--orange));
+      color: #1a1a2e;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 16px;
+      border: none; border-radius: 14px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .modal-cancel {
+      background: transparent;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">Play<span>Pop</span> 🎉</div>
+  <div class="nav-badge">📍 Stanford</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">No sign-up · No pressure · Just show up</div>
+  <h1>Find your people.<br><em>Run wild together.</em></h1>
+  <p>Spontaneous games from around the world — happening right now on campus. Join for an hour, leave whenever.</p>
+
+  <div class="live-strip">
+    <div class="pulse"></div>
+    <span><strong id="live-count">23</strong> students playing right now</span>
+  </div>
+
+  <div class="cta-row">
+    <button class="btn-primary" onclick="openModal('join')">⚡ Jump In Now</button>
+    <button class="btn-secondary" onclick="openModal('host')">＋ Start a Game</button>
+  </div>
+</div>
+
+<!-- ACTIVE SESSIONS -->
+<div class="section">
+  <p class="section-title">🔥 Happening Now — White Plaza</p>
+
+  <div class="game-card" onclick="openModal('join')">
+    <div class="game-icon">🇰🇷</div>
+    <div class="game-info">
+      <div class="game-name">경찰과 도둑 (Cops & Robbers)</div>
+      <div class="game-meta">🏃 8 playing · Oval Lawn · all welcome</div>
+    </div>
+    <div class="game-right">
+      <button class="join-btn">Join</button>
+      <div class="countdown">started 12 min ago</div>
+    </div>
+  </div>
+
+  <div class="game-card" onclick="openModal('join')">
+    <div class="game-icon">🇮🇳</div>
+    <div class="game-info">
+      <div class="game-name">Kabaddi (touch & run)</div>
+      <div class="game-meta">🏃 6 playing · Main Quad · need 4 more</div>
+    </div>
+    <div class="game-right">
+      <button class="join-btn">Join</button>
+      <div class="countdown">starting in 5 min</div>
+    </div>
+  </div>
+
+  <div class="game-card" onclick="openModal('join')">
+    <div class="game-icon">🇧🇷</div>
+    <div class="game-info">
+      <div class="game-name">Amarelinha (Hopscotch)</div>
+      <div class="game-meta">🏃 4 playing · MemChu steps · chill vibes</div>
+    </div>
+    <div class="game-right">
+      <button class="join-btn">Join</button>
+      <div class="countdown">open all afternoon</div>
+    </div>
+  </div>
+</div>
+
+<!-- GAME TYPE PILLS -->
+<div class="section">
+  <p class="section-title">Pick a vibe</p>
+  <div class="pill-row">
+    <div class="pill active">🌍 All games</div>
+    <div class="pill">🇰🇷 Korean</div>
+    <div class="pill">🇺🇸 American</div>
+    <div class="pill">🇮🇳 Indian</div>
+    <div class="pill">🇧🇷 Brazilian</div>
+    <div class="pill">🇯🇵 Japanese</div>
+    <div class="pill">🎲 Surprise me</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section">
+  <p class="section-title">How it works</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>Spot it</h3>
+      <p>See a game nearby. No account, no friction.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>Show up</h3>
+      <p>Walk over to the spot. Introduce yourself — or don't.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>Play & bounce</h3>
+      <p>Stay for 10 min or 2 hours. Leave when you want.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  PlayPop · Stanford Campus · LG U+ Lifestyle Innovation Workshop
+</footer>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+  // Animate live count
+  let count = 23;
+  setInterval(() => {
+    count += Math.random() > 0.5 ? 1 : -1;
+    count = Math.max(18, Math.min(40, count));
+    document.getElementById('live-count').textContent = count;
+  }, 3000);
+
+  // Pill toggle
+  document.querySelectorAll('.pill').forEach(p => {
+    p.addEventListener('click', () => {
+      document.querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
+      p.classList.add('active');
+    });
+  });
+
+  const joinContent = `
+    <h2>⚡ Jump In</h2>
+    <p>Pick any game below and just walk over. No registration needed — tell them PlayPop sent you 😄</p>
+    <div class="modal-actions">
+      <button class="modal-btn">📍 Show me on map</button>
+      <button class="modal-cancel" onclick="closeModal()">Maybe later</button>
+    </div>`;
+
+  const hostContent = `
+    <h2>🎮 Start a Game</h2>
+    <p>Choose a game, drop a pin on campus, and PlayPop will let nearby students know. People can wander over — no RSVP, no commitment.</p>
+    <div class="modal-actions">
+      <button class="modal-btn">🚀 Create a spot</button>
+      <button class="modal-cancel" onclick="closeModal()">Not now</button>
+    </div>`;
+
+  function openModal(type) {
+    document.getElementById('modal-content').innerHTML = type === 'join' ? joinContent : hostContent;
+    document.getElementById('overlay').classList.add('open');
+  }
+
+  function closeModal(e) {
+    if (!e || e.target === document.getElementById('overlay')) {
+      document.getElementById('overlay').classList.remove('open');
+    }
+  }
+</script>
+</body>
+</html>
