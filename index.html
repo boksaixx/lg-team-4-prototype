@@ -52,15 +52,15 @@
       font-weight: 800; font-size: 1.15rem; color: #fff;
     }
     .logo-text { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1rem; }
-    .logo-text span { color: #FFAAAA; }
+    .logo-text span { color: var(--red); }
     .nav-right { display: flex; align-items: center; gap: 8px; }
     .nav-pill {
       font-size: 0.72rem; font-weight: 700;
       padding: 6px 13px; border-radius: 50px; cursor: pointer;
     }
     .nav-pill.live {
-      background: rgba(140,21,21,0.15);
-      border: 1px solid rgba(140,21,21,0.4);
+      background: rgba(140,21,21,0.1);
+      border: 1px solid rgba(140,21,21,0.35);
       color: var(--red);
     }
     .nav-pill.my {
@@ -114,9 +114,11 @@
     }
     .live-strip {
       display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(140,21,21,0.07);
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.35);
       border-radius: 50px; padding: 9px 18px;
       font-size: 0.85rem; font-weight: 700; margin-bottom: 28px;
+      color: #fff;
     }
     .pulse { width:8px; height:8px; background:var(--red); border-radius:50%; animation:pulse 1.4s infinite; }
     @keyframes pulse {
@@ -243,7 +245,7 @@
       color: #fff;
       margin-bottom: 4px;
     }
-    .stat-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+    .stat-label { font-size: 0.65rem; font-weight: 700; color: rgba(255,255,255,0.8); text-transform: uppercase; letter-spacing: 0.06em; }
 
     .history-card {
       background: #fff; border: 1.5px solid rgba(140,21,21,0.15);
@@ -365,7 +367,7 @@
     }
     @keyframes slideUp { from{transform:translateY(60px);opacity:0;} }
     .modal-handle {
-      width: 40px; height: 4px; background: rgba(255,255,255,0.15);
+      width: 40px; height: 4px; background: rgba(0,0,0,0.15);
       border-radius: 2px; margin: 0 auto 20px;
     }
     .modal h2 { font-family:'Poppins',sans-serif; font-size:1.25rem; font-weight:800; margin-bottom:8px; }
@@ -388,8 +390,8 @@
     .rule-steps { list-style:none; margin-top:14px; }
     .rule-steps li {
       display:flex; gap:10px; align-items:flex-start;
-      padding: 10px 0; border-bottom:1px solid rgba(255,255,255,0.06);
-      font-size: 0.85rem; line-height: 1.5;
+      padding: 10px 0; border-bottom:1px solid rgba(0,0,0,0.08);
+      font-size: 0.85rem; line-height: 1.5; color: var(--text);
     }
     .rule-steps li:last-child { border-bottom:none; }
     .rule-num {
@@ -407,31 +409,31 @@
     /* ── MESSAGE MODAL extras ── */
     .msg-to {
       display:flex; align-items:center; gap:10px;
-      background:rgba(255,255,255,0.06); border-radius:12px;
+      background:#f5f5f5; border-radius:12px;
       padding:12px 14px; margin-bottom:16px;
     }
     .msg-to .avatar-lg {
       width:38px; height:38px; border-radius:50%;
       font-size:1.1rem; display:flex; align-items:center; justify-content:center;
     }
-    .msg-to-info .nickname { font-family:'Poppins',sans-serif; font-weight:700; font-size:0.95rem; }
+    .msg-to-info .nickname { font-family:'Poppins',sans-serif; font-weight:700; font-size:0.95rem; color:var(--text); }
     .msg-to-info .met-at { font-size:0.72rem; color:var(--muted); }
     textarea {
-      width:100%; background:rgba(255,255,255,0.06);
+      width:100%; background:#f9f9f9;
       border:1.5px solid rgba(140,21,21,0.2); border-radius:12px;
-      color:#fff; font-family:'Nunito',sans-serif; font-size:0.9rem;
+      color:var(--text); font-family:'Nunito',sans-serif; font-size:0.9rem;
       padding:14px; resize:none; height:110px; margin-bottom:14px;
       outline:none; transition:border-color .15s;
     }
     textarea:focus { border-color:var(--red); }
-    textarea::placeholder { color:rgba(255,255,255,0.28); }
+    textarea::placeholder { color:rgba(0,0,0,0.35); }
     .quick-msgs { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px; }
     .qm {
-      background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+      background:#f5f5f5; border:1px solid rgba(0,0,0,0.1);
       border-radius:50px; padding:6px 12px; font-size:0.75rem; font-weight:700;
-      cursor:pointer; transition:all .15s;
+      color:var(--text); cursor:pointer; transition:all .15s;
     }
-    .qm:hover { background:rgba(255,59,92,0.15); border-color:var(--red); color:var(--red); }
+    .qm:hover { background:rgba(140,21,21,0.08); border-color:var(--red); color:var(--red); }
     .send-btn {
       width:100%; background:var(--red);
       color:#fff; font-family:'Poppins',sans-serif; font-weight:800; font-size:1rem;
@@ -443,7 +445,7 @@
     .temp-bar-wrap {
       margin: 6px 0 4px;
       height: 6px; border-radius: 3px;
-      background: rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.1);
       overflow: hidden;
     }
     .temp-bar {
@@ -498,12 +500,12 @@
     }
     .vote-chip {
       display:flex; align-items:center; gap:5px;
-      background:rgba(255,255,255,0.06); border:1.5px solid rgba(255,255,255,0.1);
+      background:#f5f5f5; border:1.5px solid rgba(0,0,0,0.12);
       border-radius:50px; padding:7px 13px; font-size:0.78rem; font-weight:700;
-      cursor:pointer; transition:all .15s;
+      color:var(--text); cursor:pointer; transition:all .15s;
     }
-    .vote-chip:hover { background:rgba(140,21,21,0.15); border-color:var(--red); color:var(--red); }
-    .vote-chip.voted { background:rgba(140,21,21,0.15); border-color:var(--red); color:var(--red); }
+    .vote-chip:hover { background:rgba(140,21,21,0.08); border-color:var(--red); color:var(--red); }
+    .vote-chip.voted { background:rgba(140,21,21,0.12); border-color:var(--red); color:var(--red); }
 
     /* sent state */
     .sent-msg {
@@ -873,7 +875,7 @@
   /* ── game rules data ── */
   const rules = {
     kr: {
-      flag:'🇰🇷', country:'South Korea', color:'#fff',
+      flag:'🇰🇷', country:'South Korea', color:'#8C1515',
       name:'경찰과 도둑 (Cops & Robbers)',
       tagLine:'Tag, chase & escape — Korean childhood classic',
       steps:[
@@ -884,7 +886,7 @@
       ]
     },
     in: {
-      flag:'🇮🇳', country:'India', color:'#FFAAAA',
+      flag:'🇮🇳', country:'India', color:'#e67700',
       name:'Kabaddi',
       tagLine:'Hold your breath, cross the line — ancient Indian sport',
       steps:[
@@ -908,7 +910,7 @@
       ]
     },
     jp: {
-      flag:'🇯🇵', country:'Japan', color:'#FFE0E0',
+      flag:'🇯🇵', country:'Japan', color:'#c92a2a',
       name:'Daruma-san ga Koronda',
       tagLine:"Japan's Red Light, Green Light — the original",
       steps:[
@@ -937,7 +939,7 @@
     const r = rules[code];
     document.getElementById('rules-content').innerHTML = `
       <div class="rule-flag">${r.flag}</div>
-      <span class="rule-tag" style="background:${r.color}22;color:${r.color};border:1px solid ${r.color}55">${r.country} Traditional Game</span>
+      <span class="rule-tag" style="background:rgba(140,21,21,0.08);color:var(--red);border:1px solid rgba(140,21,21,0.2)">${r.country} Traditional Game</span>
       <h2 style="margin-top:8px">${r.name}</h2>
       <p class="sub">${r.tagLine}</p>
       <ul class="rule-steps">
@@ -948,11 +950,11 @@
 
   /* ── manner temperature ── */
   function tempInfo(t) {
-    if (t >= 39)   return { emoji:'🔥', label:'Super Hot!', color:'#fff', pct: Math.min(100, (t-36)*33) };
-    if (t >= 38)   return { emoji:'🔥', label:'Warm & Friendly', color:'#FFAAAA', pct: (t-36)*33 };
-    if (t >= 37)   return { emoji:'⭐', label:'Good Manner', color:'#FFCCCC', pct: (t-36)*33 };
-    if (t >= 36.5) return { emoji:'😊', label:'Decent Player', color:'#FFE0E0', pct: (t-36)*33 };
-    return               { emoji:'🧊', label:'Needs Warming Up', color:'#FFAAAA', pct: 10 };
+    if (t >= 39)   return { emoji:'🔥', label:'Super Hot!',       color:'#C0392B', pct: Math.min(100, (t-36)*33) };
+    if (t >= 38)   return { emoji:'🔥', label:'Warm & Friendly',  color:'#E05000', pct: (t-36)*33 };
+    if (t >= 37)   return { emoji:'⭐', label:'Good Manner',       color:'#8C1515', pct: (t-36)*33 };
+    if (t >= 36.5) return { emoji:'😊', label:'Decent Player',     color:'#666666', pct: (t-36)*33 };
+    return               { emoji:'🧊', label:'Needs Warming Up',  color:'#1c7ed6', pct: 10 };
   }
 
   function openManner(nickname, emoji, grad, metAt, temp) {
@@ -997,7 +999,7 @@
       </div>
       <div style="display:flex;gap:8px;margin-top:16px">
         <button class="send-btn" style="flex:1;font-size:0.85rem;padding:12px" onclick="openMsg('${nickname}','${emoji}','${grad}','${metAt}')">💬 Send Message</button>
-        <button class="modal-cancel" onclick="closeAll()" style="padding:12px 16px;border:1.5px solid rgba(255,255,255,0.15);border-radius:12px">Close</button>
+        <button class="modal-cancel" onclick="closeAll()" style="padding:12px 16px;border:1.5px solid rgba(0,0,0,0.12);border-radius:12px">Close</button>
       </div>`;
     open('ov-manner');
     setTimeout(() => {
