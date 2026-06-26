@@ -46,7 +46,30 @@
     .hero {
       text-align: center;
       padding: 48px 24px 32px;
+      position: relative;
     }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&auto=format&fit=crop&q=80');
+      background-size: cover;
+      background-position: center top;
+      border-radius: 0 0 32px 32px;
+      z-index: 0;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(26,26,46,0.55) 0%,
+        rgba(26,26,46,0.70) 60%,
+        rgba(26,26,46,1.00) 100%
+      );
+      border-radius: inherit;
+    }
+    .hero > * { position: relative; z-index: 1; }
     .hero-tag {
       display: inline-block;
       background: rgba(255,212,59,0.15);
@@ -305,6 +328,7 @@
 
 <!-- HERO -->
 <div class="hero">
+  <div class="hero-bg"></div>
   <div class="hero-tag">No sign-up · No pressure · Just show up</div>
   <h1>Find your people.<br><em>Run wild together.</em></h1>
   <p>Spontaneous games from around the world — happening right now on campus. Join for an hour, leave whenever.</p>
