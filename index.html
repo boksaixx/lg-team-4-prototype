@@ -4,26 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Stanford Squid Game</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --cardinal:  #8C1515;
-      --cardinal2: #B83A4B;
-      --gold:      #DAA520;
-      --green:     #51CF66;
-      --blue:      #4DABF7;
-      --pink:      #FF4D8D;
-      --dark:      #0f0f1a;
-      --surface:   #181826;
-      --card:      rgba(255,255,255,0.05);
-      --border:    rgba(255,255,255,0.09);
+      --red:    #FF3B5C;
+      --orange: #FF6B2B;
+      --yellow: #FFD23F;
+      --green:  #06D6A0;
+      --blue:   #4CC9F0;
+      --purple: #7B5EA7;
+      --pink:   #FF6FC8;
+      --dark:   #13111C;
+      --surface:#1E1B2E;
+      --card:   rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.10);
+      --text:   #F0EEFF;
+      --muted:  rgba(240,238,255,0.45);
     }
 
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * { margin:0; padding:0; box-sizing:border-box; }
 
     body {
-      font-family: 'Georgia', 'Times New Roman', serif;
+      font-family: 'Nunito', system-ui, sans-serif;
       background: var(--dark);
-      color: #fff;
+      color: var(--text);
       min-height: 100vh;
     }
 
@@ -32,472 +38,418 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 28px;
-      border-bottom: 1px solid rgba(140,21,21,0.3);
-      background: rgba(15,15,26,0.95);
-      position: sticky; top: 0; z-index: 50;
+      padding: 14px 22px;
+      background: rgba(19,17,28,0.92);
+      backdrop-filter: blur(12px);
+      position: sticky; top: 0; z-index: 60;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
     }
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 10px;
+      display: flex; align-items: center; gap: 10px;
     }
-    /* Stanford "S" mark */
     .s-mark {
-      width: 34px; height: 34px;
-      background: var(--cardinal);
-      border-radius: 6px;
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--red), var(--orange));
+      border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
-      font-family: 'Georgia', serif;
-      font-weight: 900;
-      font-size: 1.2rem;
+      font-family: 'Poppins', sans-serif;
+      font-weight: 800; font-size: 1.15rem; color: #fff;
+    }
+    .logo-text { font-family: 'Poppins', sans-serif; font-weight: 800; font-size: 1rem; }
+    .logo-text span { background: linear-gradient(90deg, var(--red), var(--orange)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; }
+    .nav-right { display: flex; align-items: center; gap: 8px; }
+    .nav-pill {
+      font-size: 0.72rem; font-weight: 700;
+      padding: 6px 13px; border-radius: 50px; cursor: pointer;
+    }
+    .nav-pill.live {
+      background: rgba(6,214,160,0.15);
+      border: 1px solid rgba(6,214,160,0.35);
+      color: var(--green);
+    }
+    .nav-pill.my {
+      background: linear-gradient(135deg, var(--red), var(--orange));
       color: #fff;
-      letter-spacing: -1px;
-      flex-shrink: 0;
     }
-    .logo-text { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.01em; font-family: 'Georgia', serif; }
-    .logo-text span { color: var(--cardinal); }
-    .nav-right { display: flex; align-items: center; gap: 10px; }
-    .nav-badge {
-      background: rgba(140,21,21,0.2);
-      border: 1px solid rgba(140,21,21,0.5);
-      color: #e8a0a0;
-      font-size: 0.72rem;
-      font-weight: 600;
-      padding: 5px 12px;
-      border-radius: 50px;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-    }
-    .nav-my {
-      background: rgba(218,165,32,0.15);
-      border: 1px solid rgba(218,165,32,0.4);
-      color: var(--gold);
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 5px 12px;
-      border-radius: 50px;
-      cursor: pointer;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-    }
-    .nav-my:hover { background: rgba(218,165,32,0.25); }
+    .nav-pill.my:hover { opacity: 0.85; }
 
     /* ── HERO ── */
     .hero {
-      text-align: center;
-      padding: 60px 24px 44px;
       position: relative;
-      min-height: 480px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
+      text-align: center;
+      padding: 70px 24px 50px;
+      min-height: 500px;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      overflow: hidden;
     }
     .hero-bg {
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&auto=format&fit=crop&q=80');
-      background-size: cover;
-      background-position: center 30%;
+      background-size: cover; background-position: center 30%;
       z-index: 0;
     }
     .hero-bg::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(15,15,26,0.50) 0%,
-        rgba(15,15,26,0.65) 55%,
-        rgba(15,15,26,1.00) 100%
-      );
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(19,17,28,.45) 0%, rgba(19,17,28,.72) 55%, rgba(19,17,28,1) 100%);
     }
     .hero > * { position: relative; z-index: 1; }
     .hero-tag {
       display: inline-block;
-      background: rgba(140,21,21,0.25);
-      border: 1px solid rgba(140,21,21,0.6);
-      color: #f0a0a0;
-      font-size: 0.72rem;
-      font-weight: 600;
-      letter-spacing: 0.12em;
-      padding: 6px 16px;
-      border-radius: 50px;
-      margin-bottom: 22px;
-      text-transform: uppercase;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: rgba(255,59,92,0.18);
+      border: 1px solid rgba(255,59,92,0.45);
+      color: #FF8FA3;
+      font-size: 0.72rem; font-weight: 800;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 6px 18px; border-radius: 50px; margin-bottom: 20px;
     }
     .hero h1 {
-      font-size: clamp(2rem, 5.5vw, 3.4rem);
-      font-weight: 700;
-      line-height: 1.15;
-      margin-bottom: 16px;
-      font-family: 'Georgia', serif;
+      font-family: 'Poppins', sans-serif;
+      font-size: clamp(2rem, 6vw, 3.6rem);
+      font-weight: 800; line-height: 1.12; margin-bottom: 14px;
     }
     .hero h1 em {
-      font-style: italic;
-      color: #e8a0a0;
+      font-style: normal;
+      background: linear-gradient(90deg, var(--yellow), var(--orange), var(--red));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
     .hero p {
-      font-size: 1rem;
-      color: rgba(255,255,255,0.65);
-      max-width: 400px;
-      margin: 0 auto 28px;
-      line-height: 1.7;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 1rem; color: rgba(255,255,255,0.65);
+      max-width: 380px; margin: 0 auto 26px; line-height: 1.7;
     }
     .live-strip {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(255,255,255,0.07);
-      border-radius: 50px;
-      padding: 9px 18px;
-      font-size: 0.85rem;
-      margin-bottom: 30px;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50px; padding: 9px 18px;
+      font-size: 0.85rem; font-weight: 700; margin-bottom: 28px;
     }
-    .pulse {
-      width: 8px; height: 8px;
-      background: var(--green);
-      border-radius: 50%;
-      animation: pulse 1.4s infinite;
-    }
+    .pulse { width:8px; height:8px; background:var(--green); border-radius:50%; animation:pulse 1.4s infinite; }
     @keyframes pulse {
-      0%,100% { box-shadow: 0 0 0 0 rgba(81,207,102,.6); }
-      50%      { box-shadow: 0 0 0 6px rgba(81,207,102,0); }
+      0%,100% { box-shadow:0 0 0 0 rgba(6,214,160,.6); }
+      50%      { box-shadow:0 0 0 6px rgba(6,214,160,0); }
     }
-    .cta-row {
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
+    .cta-row { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
     .btn-primary {
-      background: var(--cardinal);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.95rem;
-      padding: 14px 30px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background .15s, transform .15s;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      letter-spacing: 0.02em;
+      background: linear-gradient(135deg, var(--red), var(--orange));
+      color: #fff; font-family: 'Poppins', sans-serif;
+      font-weight: 700; font-size: 0.95rem;
+      padding: 14px 28px; border: none; border-radius: 50px;
+      cursor: pointer; transition: transform .15s, box-shadow .15s;
     }
-    .btn-primary:hover { background: var(--cardinal2); transform: translateY(-2px); }
+    .btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(255,59,92,.4); }
     .btn-secondary {
-      background: transparent;
-      color: #fff;
-      font-weight: 600;
-      font-size: 0.95rem;
-      padding: 14px 30px;
-      border: 1.5px solid rgba(255,255,255,0.3);
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background .15s;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: rgba(255,255,255,0.1); color: #fff;
+      font-family: 'Poppins', sans-serif; font-weight: 700; font-size: 0.95rem;
+      padding: 14px 28px; border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: 50px; cursor: pointer; transition: background .15s;
     }
-    .btn-secondary:hover { background: rgba(255,255,255,0.08); }
+    .btn-secondary:hover { background:rgba(255,255,255,0.17); }
 
-    /* ── SHARED LAYOUT ── */
-    .section { padding: 0 20px 52px; max-width: 640px; margin: 0 auto; }
+    /* ── SECTION ── */
+    .section { padding: 0 18px 48px; max-width: 640px; margin: 0 auto; }
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 16px;
+    }
     .section-title {
-      font-size: 0.68rem;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
-      margin-bottom: 18px;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Poppins', sans-serif;
+      font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted);
     }
-    .section-title.cardinal { color: rgba(220,120,120,0.7); }
+    .section-title.hot { color: #FF8FA3; }
+    .section-title.gold { color: #FFD23F; }
 
-    /* ── ACTIVE GAME CARDS ── */
+    /* ── GAME CARDS ── */
     .game-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px;
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-bottom: 10px;
-      cursor: pointer;
-      transition: background .15s, border-color .15s;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: 18px; padding: 18px;
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 12px; cursor: pointer;
+      transition: border-color .2s, transform .15s, box-shadow .15s;
     }
-    .game-card:hover { background: rgba(255,255,255,0.09); border-color: rgba(140,21,21,0.4); }
-    .game-icon {
-      font-size: 2rem;
-      width: 52px; height: 52px;
+    .game-card:hover {
+      border-color: var(--red);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,59,92,.2);
+    }
+    .flag-box {
+      font-size: 2.4rem;
+      width: 58px; height: 58px;
       background: rgba(255,255,255,0.07);
-      border-radius: 10px;
+      border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
+      position: relative;
     }
-    .game-info { flex: 1; min-width: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
-    .game-name { font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; font-family: 'Georgia', serif; }
-    .game-meta { font-size: 0.76rem; color: rgba(255,255,255,0.45); }
+    .country-label {
+      position: absolute; bottom: -6px; left: 50%; transform: translateX(-50%);
+      font-size: 0.52rem; font-weight: 800; letter-spacing: 0.04em;
+      background: var(--red); color: #fff;
+      padding: 2px 5px; border-radius: 4px; white-space: nowrap;
+    }
+    .game-info { flex: 1; min-width: 0; }
+    .game-name {
+      font-family: 'Poppins', sans-serif;
+      font-weight: 700; font-size: 0.92rem; margin-bottom: 4px;
+    }
+    .game-meta { font-size: 0.75rem; color: var(--muted); }
+    .game-rule-hint {
+      font-size: 0.68rem; color: rgba(255,210,63,0.7);
+      margin-top: 4px; font-weight: 700;
+    }
     .game-right { text-align: right; flex-shrink: 0; }
     .join-btn {
-      background: var(--cardinal);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.75rem;
-      padding: 7px 14px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      margin-bottom: 5px;
-      display: block;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, var(--red), var(--orange));
+      color: #fff; font-family: 'Poppins', sans-serif;
+      font-weight: 700; font-size: 0.75rem;
+      padding: 8px 16px; border: none; border-radius: 50px;
+      cursor: pointer; margin-bottom: 5px; display: block;
     }
-    .join-btn:hover { background: var(--cardinal2); }
-    .countdown { font-size: 0.68rem; color: rgba(255,255,255,0.35); font-family: 'Segoe UI', system-ui, sans-serif; }
+    .join-btn:hover { opacity: 0.85; }
+    .countdown { font-size: 0.68rem; color: var(--muted); }
 
     /* ── PILLS ── */
-    .pill-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 48px; }
+    .pill-row { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:0; }
     .pill {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 5px;
-      padding: 8px 16px;
-      font-size: 0.82rem;
-      cursor: pointer;
-      transition: background .15s, border-color .15s;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      display: flex; align-items: center; gap: 6px;
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 50px; padding: 8px 14px;
+      font-size: 0.82rem; font-weight: 700;
+      cursor: pointer; transition: all .15s;
     }
     .pill:hover, .pill.active {
-      background: rgba(140,21,21,0.2);
-      border-color: rgba(140,21,21,0.6);
-      color: #f0a0a0;
+      background: rgba(255,59,92,0.15);
+      border-color: var(--red); color: #FF8FA3;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none; border-top: 1px solid rgba(255,255,255,0.06);
+      margin: 0 18px 44px; max-width: 604px;
+      margin-left: auto; margin-right: auto;
     }
 
     /* ── MY HISTORY ── */
     .my-stats {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 10px;
-      margin-bottom: 24px;
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 10px; margin-bottom: 22px;
     }
     .stat-box {
-      background: rgba(140,21,21,0.12);
-      border: 1px solid rgba(140,21,21,0.25);
-      border-radius: 10px;
-      padding: 16px 12px;
-      text-align: center;
+      background: linear-gradient(135deg, rgba(255,59,92,0.12), rgba(255,107,43,0.08));
+      border: 1px solid rgba(255,59,92,0.2);
+      border-radius: 14px; padding: 16px 10px; text-align: center;
     }
     .stat-num {
-      font-size: 1.8rem;
-      font-weight: 700;
-      color: #e8a0a0;
-      font-family: 'Georgia', serif;
-      line-height: 1;
+      font-family: 'Poppins', sans-serif;
+      font-size: 2rem; font-weight: 800; line-height: 1;
+      background: linear-gradient(135deg, var(--yellow), var(--orange));
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
       margin-bottom: 4px;
     }
-    .stat-label {
-      font-size: 0.68rem;
-      color: rgba(255,255,255,0.4);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-    }
+    .stat-label { font-size: 0.65rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
 
     .history-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 18px;
-      margin-bottom: 12px;
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 18px; padding: 18px; margin-bottom: 14px;
     }
     .history-top {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
+      display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
     }
     .history-icon {
-      font-size: 1.6rem;
-      width: 44px; height: 44px;
+      font-size: 1.8rem; width: 48px; height: 48px;
       background: rgba(255,255,255,0.07);
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
+      border-radius: 12px; display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-    .history-info { flex: 1; font-family: 'Segoe UI', system-ui, sans-serif; }
-    .history-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 3px; font-family: 'Georgia', serif; }
-    .history-date { font-size: 0.7rem; color: rgba(255,255,255,0.38); }
-    .history-tag {
-      font-size: 0.68rem;
-      font-weight: 700;
-      padding: 4px 10px;
-      border-radius: 4px;
-      white-space: nowrap;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+    .history-info { flex: 1; }
+    .history-name { font-family:'Poppins',sans-serif; font-weight:700; font-size:0.88rem; margin-bottom:3px; }
+    .history-date { font-size:0.7rem; color:var(--muted); }
+    .h-tag {
+      font-size: 0.65rem; font-weight: 800;
+      padding: 4px 10px; border-radius: 50px; white-space: nowrap;
     }
-    .tag-again { background: rgba(81,207,102,0.12); color: var(--green); }
-    .tag-new   { background: rgba(77,171,247,0.12); color: var(--blue); }
+    .h-tag.again { background:rgba(6,214,160,0.15); color:var(--green); }
+    .h-tag.new   { background:rgba(76,201,240,0.15); color:var(--blue); }
 
     .crew-label {
-      font-size: 0.65rem;
-      color: rgba(255,255,255,0.3);
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      margin-bottom: 8px;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-size: 0.63rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: 0.08em; color: rgba(255,255,255,0.28); margin-bottom: 8px;
     }
-    .crew-row { display: flex; flex-wrap: wrap; gap: 7px; }
+    .crew-row { display:flex; flex-wrap:wrap; gap:7px; }
     .crew-chip {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 50px;
-      padding: 5px 11px;
-      font-size: 0.78rem;
-      cursor: pointer;
-      transition: all .15s;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(255,255,255,0.06); border: 1.5px solid rgba(255,255,255,0.1);
+      border-radius: 50px; padding: 5px 12px;
+      font-size: 0.78rem; font-weight: 700;
+      cursor: pointer; transition: all .15s;
     }
-    .crew-chip:hover { background: rgba(140,21,21,0.15); border-color: rgba(140,21,21,0.4); }
-    .crew-chip.met-again {
-      border-color: rgba(81,207,102,0.35);
-      color: var(--green);
-    }
-    .crew-chip.met-again:hover { background: rgba(81,207,102,0.1); }
+    .crew-chip:hover { background:rgba(255,59,92,0.15); border-color:var(--red); }
+    .crew-chip.again { border-color:rgba(6,214,160,0.4); color:var(--green); }
+    .crew-chip.again:hover { background:rgba(6,214,160,0.1); }
     .avatar {
-      width: 18px; height: 18px;
-      border-radius: 50%;
-      font-size: 0.6rem;
+      width: 20px; height: 20px; border-radius: 50%;
+      font-size: 0.62rem; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    }
+
+    /* message button inside chip */
+    .msg-dot {
+      width: 16px; height: 16px;
+      background: rgba(255,210,63,0.2);
+      border-radius: 50%; font-size: 0.55rem;
       display: flex; align-items: center; justify-content: center;
-      flex-shrink: 0;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      margin-left: 2px; flex-shrink: 0;
     }
 
     .reconnect-notice {
-      margin-top: 16px;
-      background: rgba(218,165,32,0.07);
-      border: 1px dashed rgba(218,165,32,0.25);
-      border-radius: 10px;
-      padding: 13px 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      margin-top: 14px;
+      background: rgba(6,214,160,0.07);
+      border: 1px dashed rgba(6,214,160,0.25);
+      border-radius: 12px; padding: 13px 16px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
     }
-    .reconnect-notice p {
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.5);
-      line-height: 1.5;
-      font-family: 'Segoe UI', system-ui, sans-serif;
-    }
-    .reconnect-notice p strong { color: var(--gold); }
+    .reconnect-notice p { font-size:0.78rem; color:var(--muted); line-height:1.5; }
+    .reconnect-notice p strong { color:var(--green); }
     .reconnect-btn {
-      background: var(--cardinal);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.72rem;
-      padding: 8px 14px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      white-space: nowrap;
-      flex-shrink: 0;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, var(--green), #00B383);
+      color: #0f0f1a; font-family:'Poppins',sans-serif;
+      font-weight: 800; font-size: 0.72rem;
+      padding: 8px 14px; border:none; border-radius:50px;
+      cursor: pointer; white-space:nowrap; flex-shrink:0;
     }
 
     /* ── HOW IT WORKS ── */
     .steps {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-bottom: 48px;
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 12px; margin-bottom: 48px;
     }
-    @media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+    @media(max-width:480px){ .steps{grid-template-columns:1fr;} }
     .step {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 22px 14px;
-      text-align: center;
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 16px; padding: 22px 14px; text-align: center;
     }
     .step-num {
-      width: 32px; height: 32px;
-      background: var(--cardinal);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.9rem;
-      border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 10px;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      width: 34px; height: 34px;
+      background: linear-gradient(135deg, var(--red), var(--orange));
+      color: #fff; font-family:'Poppins',sans-serif; font-weight:800; font-size:0.9rem;
+      border-radius:50%; display:flex; align-items:center; justify-content:center;
+      margin:0 auto 10px;
     }
-    .step h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; font-family: 'Georgia', serif; }
-    .step p  { font-size: 0.76rem; color: rgba(255,255,255,0.45); line-height: 1.55; font-family: 'Segoe UI', system-ui, sans-serif; }
-
-    /* ── DIVIDER ── */
-    .divider {
-      border: none;
-      border-top: 1px solid rgba(140,21,21,0.2);
-      margin: 0 20px 48px;
-      max-width: 600px;
-      margin-left: auto; margin-right: auto;
-    }
+    .step h3 { font-family:'Poppins',sans-serif; font-size:0.88rem; font-weight:700; margin-bottom:6px; }
+    .step p  { font-size:0.75rem; color:var(--muted); line-height:1.55; }
 
     /* ── FOOTER ── */
     footer {
-      text-align: center;
-      padding: 24px;
-      font-size: 0.7rem;
-      color: rgba(255,255,255,0.2);
+      text-align:center; padding:24px;
+      font-size: 0.68rem; font-weight:700; letter-spacing:0.06em;
+      color: rgba(255,255,255,0.18);
       border-top: 1px solid rgba(255,255,255,0.05);
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      letter-spacing: 0.04em;
     }
 
-    /* ── MODAL ── */
+    /* ── OVERLAY (shared) ── */
     .overlay {
-      display: none;
-      position: fixed; inset: 0;
-      background: rgba(0,0,0,0.8);
-      z-index: 100;
-      align-items: flex-end;
-      justify-content: center;
+      display:none; position:fixed; inset:0;
+      background:rgba(0,0,0,0.82); z-index:100;
+      align-items:flex-end; justify-content:center;
     }
-    .overlay.open { display: flex; }
+    .overlay.open { display:flex; }
+
+    /* ── MODAL BASE ── */
     .modal {
-      background: #1a1228;
-      border-radius: 18px 18px 0 0;
-      border-top: 2px solid rgba(140,21,21,0.5);
-      padding: 32px 28px 40px;
-      width: 100%;
-      max-width: 480px;
+      background: var(--surface);
+      border-radius: 24px 24px 0 0;
+      border-top: 2.5px solid;
+      border-image: linear-gradient(90deg, var(--red), var(--orange)) 1;
+      padding: 28px 24px 40px;
+      width: 100%; max-width: 480px;
       animation: slideUp .25s ease;
     }
-    @keyframes slideUp { from { transform: translateY(60px); opacity: 0; } }
-    .modal h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; font-family: 'Georgia', serif; }
-    .modal p  { font-size: 0.88rem; color: rgba(255,255,255,0.55); margin-bottom: 24px; line-height: 1.6; font-family: 'Segoe UI', system-ui, sans-serif; }
-    .modal-actions { display: flex; gap: 10px; flex-direction: column; }
+    @keyframes slideUp { from{transform:translateY(60px);opacity:0;} }
+    .modal-handle {
+      width: 40px; height: 4px; background: rgba(255,255,255,0.15);
+      border-radius: 2px; margin: 0 auto 20px;
+    }
+    .modal h2 { font-family:'Poppins',sans-serif; font-size:1.25rem; font-weight:800; margin-bottom:8px; }
+    .modal .sub { font-size:0.85rem; color:var(--muted); margin-bottom:20px; line-height:1.6; }
+    .modal-actions { display:flex; gap:10px; flex-direction:column; }
     .modal-btn {
-      background: var(--cardinal);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.95rem;
-      padding: 15px;
-      border: none; border-radius: 8px;
-      cursor: pointer;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: linear-gradient(135deg, var(--red), var(--orange));
+      color:#fff; font-family:'Poppins',sans-serif;
+      font-weight:700; font-size:0.95rem;
+      padding:15px; border:none; border-radius:12px; cursor:pointer;
     }
-    .modal-btn:hover { background: var(--cardinal2); }
+    .modal-btn:hover { opacity:0.88; }
     .modal-cancel {
-      background: transparent;
-      color: rgba(255,255,255,0.4);
-      font-size: 0.85rem;
-      border: none;
-      cursor: pointer;
-      padding: 8px;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      background:transparent; color:var(--muted);
+      font-size:0.85rem; border:none; cursor:pointer; padding:8px;
     }
+
+    /* ── GAME RULE MODAL extras ── */
+    .rule-flag { font-size: 3rem; text-align:center; margin-bottom:12px; }
+    .rule-steps { list-style:none; margin-top:14px; }
+    .rule-steps li {
+      display:flex; gap:10px; align-items:flex-start;
+      padding: 10px 0; border-bottom:1px solid rgba(255,255,255,0.06);
+      font-size: 0.85rem; line-height: 1.5;
+    }
+    .rule-steps li:last-child { border-bottom:none; }
+    .rule-num {
+      min-width: 22px; height: 22px;
+      background: linear-gradient(135deg, var(--red), var(--orange));
+      color:#fff; font-weight:800; font-size:0.72rem;
+      border-radius:50%; display:flex; align-items:center; justify-content:center;
+      flex-shrink:0; margin-top:1px;
+    }
+    .rule-tag {
+      display:inline-block; font-size:0.65rem; font-weight:800;
+      padding:3px 8px; border-radius:4px; margin-bottom:8px;
+    }
+
+    /* ── MESSAGE MODAL extras ── */
+    .msg-to {
+      display:flex; align-items:center; gap:10px;
+      background:rgba(255,255,255,0.06); border-radius:12px;
+      padding:12px 14px; margin-bottom:16px;
+    }
+    .msg-to .avatar-lg {
+      width:38px; height:38px; border-radius:50%;
+      font-size:1.1rem; display:flex; align-items:center; justify-content:center;
+    }
+    .msg-to-info .nickname { font-family:'Poppins',sans-serif; font-weight:700; font-size:0.95rem; }
+    .msg-to-info .met-at { font-size:0.72rem; color:var(--muted); }
+    textarea {
+      width:100%; background:rgba(255,255,255,0.06);
+      border:1.5px solid rgba(255,255,255,0.12); border-radius:12px;
+      color:#fff; font-family:'Nunito',sans-serif; font-size:0.9rem;
+      padding:14px; resize:none; height:110px; margin-bottom:14px;
+      outline:none; transition:border-color .15s;
+    }
+    textarea:focus { border-color:var(--red); }
+    textarea::placeholder { color:rgba(255,255,255,0.28); }
+    .quick-msgs { display:flex; flex-wrap:wrap; gap:7px; margin-bottom:16px; }
+    .qm {
+      background:rgba(255,255,255,0.07); border:1px solid rgba(255,255,255,0.12);
+      border-radius:50px; padding:6px 12px; font-size:0.75rem; font-weight:700;
+      cursor:pointer; transition:all .15s;
+    }
+    .qm:hover { background:rgba(255,59,92,0.15); border-color:var(--red); color:#FF8FA3; }
+    .send-btn {
+      width:100%; background:linear-gradient(135deg,var(--red),var(--orange));
+      color:#fff; font-family:'Poppins',sans-serif; font-weight:800; font-size:1rem;
+      padding:15px; border:none; border-radius:12px; cursor:pointer;
+    }
+    .send-btn:hover { opacity:0.88; }
+
+    /* sent state */
+    .sent-msg {
+      text-align:center; padding:16px 0;
+    }
+    .sent-msg .check {
+      font-size:2.5rem; margin-bottom:8px;
+    }
+    .sent-msg h3 { font-family:'Poppins',sans-serif; font-weight:800; font-size:1.1rem; margin-bottom:6px; }
+    .sent-msg p { font-size:0.85rem; color:var(--muted); }
   </style>
 </head>
 <body>
@@ -509,8 +461,11 @@
     <div class="logo-text">Stanford <span>Squid Game</span></div>
   </div>
   <div class="nav-right">
-    <div class="nav-my" onclick="document.getElementById('history').scrollIntoView({behavior:'smooth'})">My Games</div>
-    <div class="nav-badge">📍 On Campus</div>
+    <div class="nav-pill live">
+      <span style="display:inline-block;width:6px;height:6px;background:var(--green);border-radius:50%;margin-right:4px;animation:pulse 1.4s infinite"></span>
+      23 Live
+    </div>
+    <div class="nav-pill my" onclick="document.getElementById('history').scrollIntoView({behavior:'smooth'})">My Games</div>
   </div>
 </nav>
 
@@ -518,64 +473,93 @@
 <div class="hero">
   <div class="hero-bg"></div>
   <div class="hero-tag">No sign-up · No pressure · Just show up</div>
-  <h1>Find your people.<br><em>Run wild together.</em></h1>
+  <h1>Find your people.<br><em>Play like a kid again.</em></h1>
   <p>Spontaneous games from around the world — happening right now on campus. Join for an hour, leave whenever.</p>
-
   <div class="live-strip">
     <div class="pulse"></div>
     <span><strong id="live-count">23</strong> Cardinals playing right now</span>
   </div>
-
   <div class="cta-row">
-    <button class="btn-primary" onclick="openModal('join')">⚡ Jump In Now</button>
-    <button class="btn-secondary" onclick="openModal('host')">＋ Start a Game</button>
+    <button class="btn-primary" onclick="openJoinModal()">⚡ Jump In Now</button>
+    <button class="btn-secondary" onclick="openHostModal()">＋ Start a Game</button>
   </div>
 </div>
 
 <!-- ACTIVE SESSIONS -->
 <div class="section" style="margin-top:40px">
-  <p class="section-title">🔥 Happening Now — White Plaza</p>
+  <div class="section-header">
+    <p class="section-title hot">🔥 Happening Now — White Plaza</p>
+  </div>
 
-  <div class="game-card" onclick="openModal('join')">
-    <div class="game-icon">🇰🇷</div>
+  <div class="game-card" onclick="openRules('kr')">
+    <div class="flag-box">🇰🇷<span class="country-label">KOREA</span></div>
     <div class="game-info">
-      <div class="game-name">경찰과 도둑 (Cops & Robbers)</div>
+      <div class="game-name">경찰과 도둑</div>
       <div class="game-meta">🏃 8 playing · Oval Lawn · all welcome</div>
+      <div class="game-rule-hint">👆 Tap to see rules</div>
     </div>
     <div class="game-right">
-      <button class="join-btn">Join</button>
-      <div class="countdown">started 12 min ago</div>
+      <button class="join-btn" onclick="event.stopPropagation();openJoinModal()">Join</button>
+      <div class="countdown">12 min ago</div>
     </div>
   </div>
 
-  <div class="game-card" onclick="openModal('join')">
-    <div class="game-icon">🇮🇳</div>
+  <div class="game-card" onclick="openRules('in')">
+    <div class="flag-box">🇮🇳<span class="country-label">INDIA</span></div>
     <div class="game-info">
-      <div class="game-name">Kabaddi (touch & run)</div>
+      <div class="game-name">Kabaddi</div>
       <div class="game-meta">🏃 6 playing · Main Quad · need 4 more</div>
+      <div class="game-rule-hint">👆 Tap to see rules</div>
     </div>
     <div class="game-right">
-      <button class="join-btn">Join</button>
-      <div class="countdown">starting in 5 min</div>
+      <button class="join-btn" onclick="event.stopPropagation();openJoinModal()">Join</button>
+      <div class="countdown">in 5 min</div>
     </div>
   </div>
 
-  <div class="game-card" onclick="openModal('join')">
-    <div class="game-icon">🇧🇷</div>
+  <div class="game-card" onclick="openRules('br')">
+    <div class="flag-box">🇧🇷<span class="country-label">BRAZIL</span></div>
     <div class="game-info">
-      <div class="game-name">Amarelinha (Hopscotch)</div>
+      <div class="game-name">Amarelinha</div>
       <div class="game-meta">🏃 4 playing · MemChu steps · chill vibes</div>
+      <div class="game-rule-hint">👆 Tap to see rules</div>
     </div>
     <div class="game-right">
-      <button class="join-btn">Join</button>
-      <div class="countdown">open all afternoon</div>
+      <button class="join-btn" onclick="event.stopPropagation();openJoinModal()">Join</button>
+      <div class="countdown">all afternoon</div>
+    </div>
+  </div>
+
+  <div class="game-card" onclick="openRules('jp')">
+    <div class="flag-box">🇯🇵<span class="country-label">JAPAN</span></div>
+    <div class="game-info">
+      <div class="game-name">Daruma-san ga Koronda</div>
+      <div class="game-meta">🏃 5 playing · Cantor Arts · beginners ok</div>
+      <div class="game-rule-hint">👆 Tap to see rules</div>
+    </div>
+    <div class="game-right">
+      <button class="join-btn" onclick="event.stopPropagation();openJoinModal()">Join</button>
+      <div class="countdown">30 min ago</div>
+    </div>
+  </div>
+
+  <div class="game-card" onclick="openRules('us')">
+    <div class="flag-box">🇺🇸<span class="country-label">USA</span></div>
+    <div class="game-info">
+      <div class="game-name">Capture the Flag</div>
+      <div class="game-meta">🏃 12 playing · Lake Lag · teams welcome</div>
+      <div class="game-rule-hint">👆 Tap to see rules</div>
+    </div>
+    <div class="game-right">
+      <button class="join-btn" onclick="event.stopPropagation();openJoinModal()">Join</button>
+      <div class="countdown">just started</div>
     </div>
   </div>
 </div>
 
 <!-- GAME TYPE PILLS -->
 <div class="section">
-  <p class="section-title">Pick a vibe</p>
+  <p class="section-title" style="margin-bottom:14px">Pick a vibe</p>
   <div class="pill-row">
     <div class="pill active">🌍 All</div>
     <div class="pill">🇰🇷 Korean</div>
@@ -587,21 +571,23 @@
   </div>
 </div>
 
-<hr class="divider" />
+<hr class="divider" style="margin-top:4px" />
 
 <!-- MY HISTORY -->
 <div class="section" id="history">
-  <p class="section-title cardinal">⬡ My Play History</p>
+  <div class="section-header">
+    <p class="section-title gold">⭐ My Play History</p>
+    <span style="font-size:0.72rem;font-weight:700;color:var(--muted)">You · RedCardinal</span>
+  </div>
 
-  <!-- stats row -->
   <div class="my-stats">
     <div class="stat-box">
       <div class="stat-num">7</div>
-      <div class="stat-label">Games Played</div>
+      <div class="stat-label">Games</div>
     </div>
     <div class="stat-box">
       <div class="stat-num">19</div>
-      <div class="stat-label">People Met</div>
+      <div class="stat-label">Met</div>
     </div>
     <div class="stat-box">
       <div class="stat-num">4</div>
@@ -609,46 +595,51 @@
     </div>
   </div>
 
-  <!-- session 1 -->
+  <!-- history card 1 -->
   <div class="history-card">
     <div class="history-top">
       <div class="history-icon">🇰🇷</div>
       <div class="history-info">
-        <div class="history-name">경찰과 도둑 (Cops & Robbers)</div>
-        <div class="history-date">June 18 · Oval Lawn · 1 hr 20 min</div>
+        <div class="history-name">경찰과 도둑</div>
+        <div class="history-date">June 18 · Oval Lawn · 1h 20min</div>
       </div>
-      <span class="history-tag tag-again">2× played</span>
+      <span class="h-tag again">2× played</span>
     </div>
-    <div class="crew-label">People you played with</div>
+    <div class="crew-label">People you played with — tap to message</div>
     <div class="crew-row">
-      <div class="crew-chip met-again" title="Played together again!">
+      <div class="crew-chip again" onclick="openMsg('RedFox42','🦊','linear-gradient(135deg,#FF6B6B,#FF4D8D)','경찰과 도둑 · June 18')">
         <div class="avatar" style="background:linear-gradient(135deg,#FF6B6B,#FF4D8D)">🦊</div>
         RedFox42
+        <div class="msg-dot">💬</div>
       </div>
-      <div class="crew-chip met-again">
+      <div class="crew-chip again" onclick="openMsg('BlueWhale','🐋','linear-gradient(135deg,#4DABF7,#845EF7)','경찰과 도둑 · June 18')">
         <div class="avatar" style="background:linear-gradient(135deg,#4DABF7,#845EF7)">🐋</div>
         BlueWhale
+        <div class="msg-dot">💬</div>
       </div>
-      <div class="crew-chip">
+      <div class="crew-chip" onclick="openMsg('GreenLeaf','🌿','linear-gradient(135deg,#51CF66,#20C997)','경찰과 도둑 · June 18')">
         <div class="avatar" style="background:linear-gradient(135deg,#51CF66,#20C997)">🌿</div>
         GreenLeaf
+        <div class="msg-dot">💬</div>
       </div>
-      <div class="crew-chip">
+      <div class="crew-chip" onclick="openMsg('SilverMoon','🌙','linear-gradient(135deg,#FFD43B,#FF6B35)','경찰과 도둑 · June 18')">
         <div class="avatar" style="background:linear-gradient(135deg,#FFD43B,#FF6B35)">🌙</div>
         SilverMoon
+        <div class="msg-dot">💬</div>
       </div>
-      <div class="crew-chip">
+      <div class="crew-chip" onclick="openMsg('CosmicP','🪐','linear-gradient(135deg,#cc5de8,#845ef7)','경찰과 도둑 · June 18')">
         <div class="avatar" style="background:linear-gradient(135deg,#cc5de8,#845ef7)">🪐</div>
         CosmicP
+        <div class="msg-dot">💬</div>
       </div>
     </div>
     <div class="reconnect-notice">
-      <p><strong>RedFox42 & BlueWhale</strong> are playing Kabaddi right now nearby.</p>
-      <button class="reconnect-btn" onclick="openModal('join')">See Game →</button>
+      <p><strong>RedFox42 & BlueWhale</strong> are playing Kabaddi nearby right now!</p>
+      <button class="reconnect-btn" onclick="openJoinModal()">Join them →</button>
     </div>
   </div>
 
-  <!-- session 2 -->
+  <!-- history card 2 -->
   <div class="history-card">
     <div class="history-top">
       <div class="history-icon">🇯🇵</div>
@@ -656,30 +647,34 @@
         <div class="history-name">Daruma-san ga Koronda</div>
         <div class="history-date">June 12 · Main Quad · 45 min</div>
       </div>
-      <span class="history-tag tag-new">First time</span>
+      <span class="h-tag new">First time</span>
     </div>
-    <div class="crew-label">People you played with</div>
+    <div class="crew-label">People you played with — tap to message</div>
     <div class="crew-row">
-      <div class="crew-chip">
+      <div class="crew-chip" onclick="openMsg('TigerSun','🦁','linear-gradient(135deg,#FF6B35,#F03E3E)','Daruma · June 12')">
         <div class="avatar" style="background:linear-gradient(135deg,#FF6B35,#F03E3E)">🦁</div>
         TigerSun
+        <div class="msg-dot">💬</div>
       </div>
-      <div class="crew-chip">
+      <div class="crew-chip" onclick="openMsg('IceBear','❄️','linear-gradient(135deg,#4DABF7,#1c7ed6)','Daruma · June 12')">
         <div class="avatar" style="background:linear-gradient(135deg,#4DABF7,#1c7ed6)">❄️</div>
         IceBear
+        <div class="msg-dot">💬</div>
       </div>
-      <div class="crew-chip">
+      <div class="crew-chip" onclick="openMsg('OrangeZest','🍊','linear-gradient(135deg,#ff922b,#ffd43b)','Daruma · June 12')">
         <div class="avatar" style="background:linear-gradient(135deg,#ff922b,#ffd43b)">🍊</div>
         OrangeZest
+        <div class="msg-dot">💬</div>
       </div>
-      <div class="crew-chip">
+      <div class="crew-chip" onclick="openMsg('WaveRider','🌊','linear-gradient(135deg,#63e6be,#20c997)','Daruma · June 12')">
         <div class="avatar" style="background:linear-gradient(135deg,#63e6be,#20c997)">🌊</div>
         WaveRider
+        <div class="msg-dot">💬</div>
       </div>
     </div>
   </div>
 
-  <!-- session 3 -->
+  <!-- history card 3 -->
   <div class="history-card">
     <div class="history-top">
       <div class="history-icon">🇧🇷</div>
@@ -687,64 +682,106 @@
         <div class="history-name">Amarelinha (Hopscotch)</div>
         <div class="history-date">June 5 · MemChu steps · 30 min</div>
       </div>
-      <span class="history-tag tag-new">First time</span>
+      <span class="h-tag new">First time</span>
     </div>
-    <div class="crew-label">People you played with</div>
+    <div class="crew-label">People you played with — tap to message</div>
     <div class="crew-row">
-      <div class="crew-chip met-again">
+      <div class="crew-chip again" onclick="openMsg('GreenLeaf','🌿','linear-gradient(135deg,#51CF66,#20C997)','Amarelinha · June 5')">
         <div class="avatar" style="background:linear-gradient(135deg,#51CF66,#20C997)">🌿</div>
         GreenLeaf
+        <div class="msg-dot">💬</div>
       </div>
-      <div class="crew-chip">
+      <div class="crew-chip" onclick="openMsg('NightOwl','🔮','linear-gradient(135deg,#845ef7,#cc5de8)','Amarelinha · June 5')">
         <div class="avatar" style="background:linear-gradient(135deg,#845ef7,#cc5de8)">🔮</div>
         NightOwl
+        <div class="msg-dot">💬</div>
       </div>
-      <div class="crew-chip">
+      <div class="crew-chip" onclick="openMsg('CherryBomb','🍒','linear-gradient(135deg,#f03e3e,#ff6b6b)','Amarelinha · June 5')">
         <div class="avatar" style="background:linear-gradient(135deg,#f03e3e,#ff6b6b)">🍒</div>
         CherryBomb
+        <div class="msg-dot">💬</div>
       </div>
     </div>
   </div>
-
 </div>
 
 <hr class="divider" />
 
 <!-- HOW IT WORKS -->
 <div class="section">
-  <p class="section-title">How it works</p>
+  <p class="section-title" style="margin-bottom:16px">How it works</p>
   <div class="steps">
     <div class="step">
       <div class="step-num">1</div>
       <h3>Spot it</h3>
-      <p>See a game nearby. No account, no friction.</p>
+      <p>See a game nearby. No account needed.</p>
     </div>
     <div class="step">
       <div class="step-num">2</div>
       <h3>Show up</h3>
-      <p>Walk over. Introduce yourself — or don't.</p>
+      <p>Walk over. Say hi — or just start playing.</p>
     </div>
     <div class="step">
       <div class="step-num">3</div>
       <h3>Play & bounce</h3>
-      <p>Stay 10 min or 2 hours. Leave when you want.</p>
+      <p>Stay 10 min or 2 hrs. Leave when you want.</p>
     </div>
   </div>
 </div>
 
-<!-- FOOTER -->
-<footer>
-  STANFORD SQUID GAME &nbsp;·&nbsp; LG U+ LIFESTYLE INNOVATION WORKSHOP
-</footer>
+<footer>STANFORD SQUID GAME &nbsp;·&nbsp; LG U+ LIFESTYLE INNOVATION WORKSHOP</footer>
 
-<!-- MODAL -->
-<div class="overlay" id="overlay" onclick="closeModal(event)">
-  <div class="modal" id="modal">
-    <div id="modal-content"></div>
+<!-- ═══════════════ OVERLAYS ═══════════════ -->
+
+<!-- Join overlay -->
+<div class="overlay" id="ov-join" onclick="closeAll(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h2>⚡ Jump In</h2>
+    <p class="sub">Just walk over — no registration needed. Your nickname for this session will be auto-generated.</p>
+    <div class="modal-actions">
+      <button class="modal-btn">📍 Show me on map</button>
+      <button class="modal-cancel" onclick="closeAll()">Maybe later</button>
+    </div>
+  </div>
+</div>
+
+<!-- Host overlay -->
+<div class="overlay" id="ov-host" onclick="closeAll(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h2>🎮 Start a Game</h2>
+    <p class="sub">Choose a game, drop a pin on campus, and nearby students will see it. No RSVP required.</p>
+    <div class="modal-actions">
+      <button class="modal-btn">🚀 Create a spot</button>
+      <button class="modal-cancel" onclick="closeAll()">Not now</button>
+    </div>
+  </div>
+</div>
+
+<!-- Rules overlay -->
+<div class="overlay" id="ov-rules" onclick="closeAll(event)">
+  <div class="modal" id="rules-modal">
+    <div class="modal-handle"></div>
+    <div id="rules-content"></div>
+    <div class="modal-actions" style="margin-top:20px">
+      <button class="modal-btn" onclick="closeAll();openJoinModal()">⚡ Join this game</button>
+      <button class="modal-cancel" onclick="closeAll()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Message overlay -->
+<div class="overlay" id="ov-msg" onclick="closeAll(event)">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <h2>💬 Send a Message</h2>
+    <div id="msg-content"></div>
   </div>
 </div>
 
 <script>
+  /* ── live counter ── */
   let count = 23;
   setInterval(() => {
     count += Math.random() > 0.5 ? 1 : -1;
@@ -752,6 +789,7 @@
     document.getElementById('live-count').textContent = count;
   }, 3000);
 
+  /* ── pill filter ── */
   document.querySelectorAll('.pill').forEach(p => {
     p.addEventListener('click', () => {
       document.querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
@@ -759,31 +797,132 @@
     });
   });
 
-  const joinContent = `
-    <h2>Jump In</h2>
-    <p>Pick any game and just walk over. No registration needed — just show up.</p>
-    <div class="modal-actions">
-      <button class="modal-btn">📍 Show me on map</button>
-      <button class="modal-cancel" onclick="closeModal()">Maybe later</button>
-    </div>`;
+  /* ── overlay helpers ── */
+  function closeAll(e) {
+    if (e && !e.target.classList.contains('overlay')) return;
+    document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none');
+  }
+  function open(id) {
+    document.querySelectorAll('.overlay').forEach(o => o.style.display = 'none');
+    const el = document.getElementById(id);
+    el.style.display = 'flex';
+  }
+  function openJoinModal() { open('ov-join'); }
+  function openHostModal() { open('ov-host'); }
 
-  const hostContent = `
-    <h2>Start a Game</h2>
-    <p>Choose a game, drop a pin on campus, and nearby students will know. No RSVP, no commitment — just play.</p>
-    <div class="modal-actions">
-      <button class="modal-btn">🚀 Create a spot</button>
-      <button class="modal-cancel" onclick="closeModal()">Not now</button>
-    </div>`;
+  /* ── game rules data ── */
+  const rules = {
+    kr: {
+      flag:'🇰🇷', country:'South Korea', color:'#FF3B5C',
+      name:'경찰과 도둑 (Cops & Robbers)',
+      tagLine:'Tag, chase & escape — Korean childhood classic',
+      steps:[
+        'Split into two teams: Cops 👮 and Robbers 🦹',
+        'Cops chase and tag Robbers. Tagged Robbers go to "jail" (a marked zone).',
+        'Free Robbers can rescue jailed teammates by tagging them.',
+        'Cops win when ALL Robbers are in jail. Robbers win by surviving the time limit!',
+      ]
+    },
+    in: {
+      flag:'🇮🇳', country:'India', color:'#FF6B2B',
+      name:'Kabaddi',
+      tagLine:'Hold your breath, cross the line — ancient Indian sport',
+      steps:[
+        'Two teams face each other across a centre line.',
+        'One "raider" crosses into enemy territory, chanting "kabaddi kabaddi" without breathing.',
+        'The raider tries to tag opponents and return to their side.',
+        'Defenders try to tackle the raider before they can return.',
+        'Points for each tag. Most points wins!',
+      ]
+    },
+    br: {
+      flag:'🇧🇷', country:'Brazil', color:'#06D6A0',
+      name:'Amarelinha (Hopscotch)',
+      tagLine:'Draw squares, toss a stone, hop your way home',
+      steps:[
+        'Draw a hopscotch grid (10 squares) with chalk on the ground.',
+        'Player 1 tosses a stone onto square 1.',
+        'Hop over the stone square, landing on all others — one foot on singles, two on doubles.',
+        'At the end, turn around and hop back. Pick up the stone on the way.',
+        'Next round, toss to square 2. Whoever completes the grid first wins!',
+      ]
+    },
+    jp: {
+      flag:'🇯🇵', country:'Japan', color:'#4CC9F0',
+      name:'Daruma-san ga Koronda',
+      tagLine:"Japan's Red Light, Green Light — the original",
+      steps:[
+        'One player is "Daruma" and stands facing a wall.',
+        'While Daruma chants "Daruma-san ga koronda!" all other players rush forward.',
+        'When Daruma turns around, everyone must FREEZE instantly.',
+        'Anyone caught moving is out (or must hold Daruma\'s hand).',
+        'First player to tap Daruma\'s shoulder wins the round!',
+      ]
+    },
+    us: {
+      flag:'🇺🇸', country:'USA', color:'#7B5EA7',
+      name:'Capture the Flag',
+      tagLine:'Defend yours, steal theirs — classic American outdoor game',
+      steps:[
+        'Two teams each guard a "flag" (any object) on their side of the field.',
+        'Cross into enemy territory to grab their flag without getting tagged.',
+        'If tagged on enemy side, you go to their jail — a teammate must free you.',
+        'Return your own side with the flag to WIN.',
+        'No hiding the flag — it must be visible at all times!',
+      ]
+    },
+  };
 
-  function openModal(type) {
-    document.getElementById('modal-content').innerHTML = type === 'join' ? joinContent : hostContent;
-    document.getElementById('overlay').classList.add('open');
+  function openRules(code) {
+    const r = rules[code];
+    document.getElementById('rules-content').innerHTML = `
+      <div class="rule-flag">${r.flag}</div>
+      <span class="rule-tag" style="background:${r.color}22;color:${r.color};border:1px solid ${r.color}55">${r.country} Traditional Game</span>
+      <h2 style="margin-top:8px">${r.name}</h2>
+      <p class="sub">${r.tagLine}</p>
+      <ul class="rule-steps">
+        ${r.steps.map((s,i)=>`<li><div class="rule-num">${i+1}</div><span>${s}</span></li>`).join('')}
+      </ul>`;
+    open('ov-rules');
   }
 
-  function closeModal(e) {
-    if (!e || e.target === document.getElementById('overlay')) {
-      document.getElementById('overlay').classList.remove('open');
-    }
+  /* ── message modal ── */
+  function openMsg(nickname, emoji, grad, metAt) {
+    document.getElementById('msg-content').innerHTML = `
+      <div class="msg-to">
+        <div class="avatar-lg" style="background:${grad};font-size:1.3rem">${emoji}</div>
+        <div class="msg-to-info">
+          <div class="nickname">${nickname}</div>
+          <div class="met-at">Met at ${metAt}</div>
+        </div>
+      </div>
+      <div class="quick-msgs">
+        <div class="qm" onclick="fillMsg('Hey! Had so much fun playing with you 🎉')">Had so much fun! 🎉</div>
+        <div class="qm" onclick="fillMsg('Want to play again next week?')">Play again? 🕹️</div>
+        <div class="qm" onclick="fillMsg('There\\'s a ${metAt.split('·')[0].trim()} game happening right now nearby!')">Come join now! ⚡</div>
+        <div class="qm" onclick="fillMsg('Great meeting you! Let\\'s hang sometime 🤝')">Let's hang! 🤝</div>
+      </div>
+      <textarea id="msg-text" placeholder="Write something friendly..."></textarea>
+      <button class="send-btn" onclick="sendMsg('${nickname}')">Send Message 🚀</button>
+      <button class="modal-cancel" onclick="closeAll()" style="display:block;width:100%;text-align:center;margin-top:8px">Cancel</button>`;
+    open('ov-msg');
+  }
+
+  function fillMsg(text) {
+    document.getElementById('msg-text').value = text;
+    document.getElementById('msg-text').focus();
+  }
+
+  function sendMsg(nickname) {
+    const txt = document.getElementById('msg-text').value.trim();
+    if (!txt) { document.getElementById('msg-text').focus(); return; }
+    document.getElementById('msg-content').innerHTML = `
+      <div class="sent-msg">
+        <div class="check">✅</div>
+        <h3>Message sent to ${nickname}!</h3>
+        <p>Your nickname is kept private.<br>They'll see it was from someone they played with.</p>
+      </div>
+      <button class="send-btn" style="margin-top:20px" onclick="closeAll()">Done</button>`;
   }
 </script>
 </body>
