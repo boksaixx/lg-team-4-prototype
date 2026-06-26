@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>플레이팝 — 그냥 나타나서 뛰어놀면 돼</title>
+  <style>
+    :root {
+      --yellow: #FFD43B;
+      --orange: #FF6B35;
+      --pink:   #FF4D8D;
+      --blue:   #4DABF7;
+      --green:  #51CF66;
+      --dark:   #1a1a2e;
+      --card:   #ffffff;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', system-ui, sans-serif;
+      background: var(--dark);
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 28px;
+    }
+    .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: -1px; }
+    .logo span { color: var(--yellow); }
+    .nav-badge {
+      background: var(--pink);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 50px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      text-align: center;
+      padding: 48px 24px 32px;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: rgba(255,212,59,0.15);
+      border: 1px solid var(--yellow);
+      color: var(--yellow);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 6px 16px;
+      border-radius: 50px;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(1.9rem, 6vw, 3.4rem);
+      font-weight: 900;
+      line-height: 1.2;
+      margin-bottom: 16px;
+      word-break: keep-all;
+    }
+    .hero h1 em {
+      font-style: normal;
+      background: linear-gradient(90deg, var(--yellow), var(--orange));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero p {
+      font-size: 1rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 380px;
+      margin: 0 auto 32px;
+      line-height: 1.7;
+      word-break: keep-all;
+    }
+
+    /* live counter */
+    .live-strip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 50px;
+      padding: 10px 20px;
+      font-size: 0.9rem;
+      margin-bottom: 36px;
+    }
+    .pulse {
+      width: 8px; height: 8px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: pulse 1.4s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 0 0 0 rgba(81,207,102,.6); }
+      50%      { box-shadow: 0 0 0 6px rgba(81,207,102,0); }
+    }
+
+    /* CTA buttons */
+    .cta-row {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 56px;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--yellow), var(--orange));
+      color: #1a1a2e;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 16px 32px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(255,107,53,.4); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 16px 32px;
+      border: 1.5px solid rgba(255,255,255,0.25);
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.18); }
+
+    /* ── SECTION TITLE ── */
+    .section-title {
+      text-align: center;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 20px;
+    }
+
+    /* ── GAME CARDS ── */
+    .section { padding: 0 20px 48px; max-width: 640px; margin: 0 auto; }
+
+    .game-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 18px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: background .15s, transform .15s;
+    }
+    .game-card:hover { background: rgba(255,255,255,0.1); transform: translateX(4px); }
+    .game-icon {
+      font-size: 2.2rem;
+      width: 56px; height: 56px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .game-info { flex: 1; min-width: 0; }
+    .game-name { font-weight: 800; font-size: 0.95rem; margin-bottom: 4px; word-break: keep-all; }
+    .game-meta { font-size: 0.78rem; color: rgba(255,255,255,0.5); }
+    .game-right { text-align: right; flex-shrink: 0; }
+    .join-btn {
+      background: var(--yellow);
+      color: #1a1a2e;
+      font-weight: 800;
+      font-size: 0.8rem;
+      padding: 8px 16px;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      margin-bottom: 6px;
+      white-space: nowrap;
+      display: block;
+    }
+    .join-btn:hover { background: var(--orange); color: #fff; }
+    .countdown {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── PILLS ── */
+    .pill-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+    .pill {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 50px;
+      padding: 10px 18px;
+      font-size: 0.88rem;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .pill:hover, .pill.active {
+      background: rgba(255,212,59,0.15);
+      border-color: var(--yellow);
+      color: var(--yellow);
+    }
+
+    /* ── HOW IT WORKS ── */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 48px;
+    }
+    @media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
+    .step {
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+      padding: 24px 16px;
+      text-align: center;
+    }
+    .step-num {
+      width: 36px; height: 36px;
+      background: linear-gradient(135deg, var(--yellow), var(--orange));
+      color: #1a1a2e;
+      font-weight: 900;
+      font-size: 1rem;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 12px;
+    }
+    .step h3 { font-size: 0.95rem; font-weight: 800; margin-bottom: 6px; }
+    .step p  { font-size: 0.78rem; color: rgba(255,255,255,0.5); line-height: 1.6; word-break: keep-all; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.25);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* ── MODAL ── */
+    .overlay {
+      display: none;
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,0.75);
+      z-index: 100;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .overlay.open { display: flex; }
+    .modal {
+      background: #16213e;
+      border-radius: 24px 24px 0 0;
+      padding: 32px 28px 40px;
+      width: 100%;
+      max-width: 480px;
+      animation: slideUp .25s ease;
+    }
+    @keyframes slideUp { from { transform: translateY(60px); opacity: 0; } }
+    .modal h2 { font-size: 1.4rem; font-weight: 900; margin-bottom: 8px; }
+    .modal p  { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 24px; line-height: 1.6; word-break: keep-all; }
+    .modal-actions { display: flex; gap: 12px; flex-direction: column; }
+    .modal-btn {
+      background: linear-gradient(135deg, var(--yellow), var(--orange));
+      color: #1a1a2e;
+      font-weight: 800;
+      font-size: 1rem;
+      padding: 16px;
+      border: none; border-radius: 14px;
+      cursor: pointer;
+      text-align: center;
+    }
+    .modal-cancel {
+      background: transparent;
+      color: rgba(255,255,255,0.5);
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">플레이<span>팝</span> 🎉</div>
+  <div class="nav-badge">📍 스탠포드</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">가입 없음 · 부담 없음 · 그냥 나타나면 됨</div>
+  <h1>새 친구 필요 없어.<br><em>그냥 같이 뛰면 돼.</em></h1>
+  <p>지금 캠퍼스 어딘가에서 전 세계 전통 놀이가 펼쳐지고 있어요. 한 시간만 놀다 가도 OK, 그냥 사라져도 OK.</p>
+
+  <div class="live-strip">
+    <div class="pulse"></div>
+    <span>지금 <strong id="live-count">23</strong>명이 뛰어놀고 있어요</span>
+  </div>
+
+  <div class="cta-row">
+    <button class="btn-primary" onclick="openModal('join')">⚡ 지금 바로 합류하기</button>
+    <button class="btn-secondary" onclick="openModal('host')">＋ 내가 판 열기</button>
+  </div>
+</div>
+
+<!-- ACTIVE SESSIONS -->
+<div class="section">
+  <p class="section-title">🔥 지금 진행 중 — White Plaza 근처</p>
+
+  <div class="game-card" onclick="openModal('join')">
+    <div class="game-icon">🇰🇷</div>
+    <div class="game-info">
+      <div class="game-name">경찰과 도둑</div>
+      <div class="game-meta">🏃 8명 플레이 중 · Oval Lawn · 누구나 환영</div>
+    </div>
+    <div class="game-right">
+      <button class="join-btn">합류</button>
+      <div class="countdown">12분 전 시작</div>
+    </div>
+  </div>
+
+  <div class="game-card" onclick="openModal('join')">
+    <div class="game-icon">🇮🇳</div>
+    <div class="game-info">
+      <div class="game-name">카바디 (Kabaddi)</div>
+      <div class="game-meta">🏃 6명 플레이 중 · Main Quad · 4명 더 필요</div>
+    </div>
+    <div class="game-right">
+      <button class="join-btn">합류</button>
+      <div class="countdown">5분 후 시작</div>
+    </div>
+  </div>
+
+  <div class="game-card" onclick="openModal('join')">
+    <div class="game-icon">🇧🇷</div>
+    <div class="game-info">
+      <div class="game-name">아마렐리냐 (땅따먹기)</div>
+      <div class="game-meta">🏃 4명 플레이 중 · MemChu 계단 · 느긋한 분위기</div>
+    </div>
+    <div class="game-right">
+      <button class="join-btn">합류</button>
+      <div class="countdown">오후 내내 열림</div>
+    </div>
+  </div>
+</div>
+
+<!-- GAME TYPE PILLS -->
+<div class="section">
+  <p class="section-title">어떤 놀이 할래요?</p>
+  <div class="pill-row">
+    <div class="pill active">🌍 전체</div>
+    <div class="pill">🇰🇷 한국</div>
+    <div class="pill">🇺🇸 미국</div>
+    <div class="pill">🇮🇳 인도</div>
+    <div class="pill">🇧🇷 브라질</div>
+    <div class="pill">🇯🇵 일본</div>
+    <div class="pill">🎲 랜덤</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="section">
+  <p class="section-title">이렇게 하면 돼요</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <h3>발견</h3>
+      <p>근처에 열린 게임을 봐요. 가입도, 프로필도 필요 없어요.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <h3>그냥 나타나기</h3>
+      <p>그 장소로 걸어가요. 인사해도 되고, 안 해도 돼요.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <h3>놀다가 튀기</h3>
+      <p>10분이든 2시간이든. 가고 싶을 때 그냥 가면 돼요.</p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  플레이팝 · 스탠포드 캠퍼스 · LG U+ 라이프스타일 이노베이션 워크숍
+</footer>
+
+<!-- MODAL -->
+<div class="overlay" id="overlay" onclick="closeModal(event)">
+  <div class="modal" id="modal">
+    <div id="modal-content"></div>
+  </div>
+</div>
+
+<script>
+  let count = 23;
+  setInterval(() => {
+    count += Math.random() > 0.5 ? 1 : -1;
+    count = Math.max(18, Math.min(40, count));
+    document.getElementById('live-count').textContent = count;
+  }, 3000);
+
+  document.querySelectorAll('.pill').forEach(p => {
+    p.addEventListener('click', () => {
+      document.querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
+      p.classList.add('active');
+    });
+  });
+
+  const joinContent = `
+    <h2>⚡ 합류하기</h2>
+    <p>아래 게임 중 하나 골라서 그냥 걸어가면 돼요. 따로 등록 같은 거 없어요 — 플레이팝 보고 왔다고 하면 됩니다 😄</p>
+    <div class="modal-actions">
+      <button class="modal-btn">📍 지도에서 위치 보기</button>
+      <button class="modal-cancel" onclick="closeModal()">나중에 할게요</button>
+    </div>`;
+
+  const hostContent = `
+    <h2>🎮 판 열기</h2>
+    <p>놀이 고르고, 캠퍼스에 핀 꽂으면 근처 학생들한테 알림이 가요. 예약 없이 그냥 오면 되는 판이에요.</p>
+    <div class="modal-actions">
+      <button class="modal-btn">🚀 지금 판 열기</button>
+      <button class="modal-cancel" onclick="closeModal()">지금은 아니에요</button>
+    </div>`;
+
+  function openModal(type) {
+    document.getElementById('modal-content').innerHTML = type === 'join' ? joinContent : hostContent;
+    document.getElementById('overlay').classList.add('open');
+  }
+
+  function closeModal(e) {
+    if (!e || e.target === document.getElementById('overlay')) {
+      document.getElementById('overlay').classList.remove('open');
+    }
+  }
+</script>
+</body>
+</html>
