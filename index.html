@@ -6,19 +6,22 @@
   <title>Stanford Squid Game</title>
   <style>
     :root {
-      --yellow: #FFD43B;
-      --orange: #FF6B35;
-      --pink:   #FF4D8D;
-      --blue:   #4DABF7;
-      --green:  #51CF66;
-      --dark:   #1a1a2e;
-      --card:   #ffffff;
+      --cardinal:  #8C1515;
+      --cardinal2: #B83A4B;
+      --gold:      #DAA520;
+      --green:     #51CF66;
+      --blue:      #4DABF7;
+      --pink:      #FF4D8D;
+      --dark:      #0f0f1a;
+      --surface:   #181826;
+      --card:      rgba(255,255,255,0.05);
+      --border:    rgba(255,255,255,0.09);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      font-family: 'Georgia', 'Times New Roman', serif;
       background: var(--dark);
       color: #fff;
       min-height: 100vh;
@@ -29,91 +32,128 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 18px 28px;
+      padding: 16px 28px;
+      border-bottom: 1px solid rgba(140,21,21,0.3);
+      background: rgba(15,15,26,0.95);
+      position: sticky; top: 0; z-index: 50;
     }
-    .logo { font-size: 1.5rem; font-weight: 900; letter-spacing: -1px; }
-    .logo span { color: var(--yellow); }
-    .nav-badge {
-      background: var(--pink);
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    /* Stanford "S" mark */
+    .s-mark {
+      width: 34px; height: 34px;
+      background: var(--cardinal);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Georgia', serif;
+      font-weight: 900;
+      font-size: 1.2rem;
       color: #fff;
-      font-size: 0.75rem;
-      font-weight: 700;
-      padding: 6px 14px;
-      border-radius: 50px;
+      letter-spacing: -1px;
+      flex-shrink: 0;
     }
+    .logo-text { font-size: 1.1rem; font-weight: 700; letter-spacing: 0.01em; font-family: 'Georgia', serif; }
+    .logo-text span { color: var(--cardinal); }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .nav-badge {
+      background: rgba(140,21,21,0.2);
+      border: 1px solid rgba(140,21,21,0.5);
+      color: #e8a0a0;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 50px;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    .nav-my {
+      background: rgba(218,165,32,0.15);
+      border: 1px solid rgba(218,165,32,0.4);
+      color: var(--gold);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    .nav-my:hover { background: rgba(218,165,32,0.25); }
 
     /* ── HERO ── */
     .hero {
       text-align: center;
-      padding: 48px 24px 32px;
+      padding: 60px 24px 44px;
       position: relative;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
     }
     .hero-bg {
       position: absolute;
       inset: 0;
       background-image: url('https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=1400&auto=format&fit=crop&q=80');
       background-size: cover;
-      background-position: center top;
-      border-radius: 0 0 32px 32px;
+      background-position: center 30%;
       z-index: 0;
     }
     .hero-bg::after {
       content: '';
-      position: absolute;
-      inset: 0;
+      position: absolute; inset: 0;
       background: linear-gradient(
         to bottom,
-        rgba(26,26,46,0.55) 0%,
-        rgba(26,26,46,0.70) 60%,
-        rgba(26,26,46,1.00) 100%
+        rgba(15,15,26,0.50) 0%,
+        rgba(15,15,26,0.65) 55%,
+        rgba(15,15,26,1.00) 100%
       );
-      border-radius: inherit;
     }
     .hero > * { position: relative; z-index: 1; }
     .hero-tag {
       display: inline-block;
-      background: rgba(255,212,59,0.15);
-      border: 1px solid var(--yellow);
-      color: var(--yellow);
-      font-size: 0.8rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
+      background: rgba(140,21,21,0.25);
+      border: 1px solid rgba(140,21,21,0.6);
+      color: #f0a0a0;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
       padding: 6px 16px;
       border-radius: 50px;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       text-transform: uppercase;
+      font-family: 'Segoe UI', system-ui, sans-serif;
     }
     .hero h1 {
-      font-size: clamp(2rem, 6vw, 3.6rem);
-      font-weight: 900;
-      line-height: 1.1;
+      font-size: clamp(2rem, 5.5vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.15;
       margin-bottom: 16px;
+      font-family: 'Georgia', serif;
     }
     .hero h1 em {
-      font-style: normal;
-      background: linear-gradient(90deg, var(--yellow), var(--orange));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-style: italic;
+      color: #e8a0a0;
     }
     .hero p {
-      font-size: 1.05rem;
-      color: rgba(255,255,255,0.6);
-      max-width: 420px;
-      margin: 0 auto 32px;
-      line-height: 1.6;
+      font-size: 1rem;
+      color: rgba(255,255,255,0.65);
+      max-width: 400px;
+      margin: 0 auto 28px;
+      line-height: 1.7;
+      font-family: 'Segoe UI', system-ui, sans-serif;
     }
-
-    /* live counter */
     .live-strip {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       background: rgba(255,255,255,0.07);
       border-radius: 50px;
-      padding: 10px 20px;
-      font-size: 0.9rem;
-      margin-bottom: 36px;
+      padding: 9px 18px;
+      font-size: 0.85rem;
+      margin-bottom: 30px;
+      font-family: 'Segoe UI', system-ui, sans-serif;
     }
     .pulse {
       width: 8px; height: 8px;
@@ -125,196 +165,338 @@
       0%,100% { box-shadow: 0 0 0 0 rgba(81,207,102,.6); }
       50%      { box-shadow: 0 0 0 6px rgba(81,207,102,0); }
     }
-
-    /* CTA buttons */
     .cta-row {
       display: flex;
       gap: 12px;
       justify-content: center;
       flex-wrap: wrap;
-      margin-bottom: 56px;
     }
     .btn-primary {
-      background: linear-gradient(135deg, var(--yellow), var(--orange));
-      color: #1a1a2e;
-      font-weight: 800;
-      font-size: 1rem;
-      padding: 16px 32px;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: transform .15s, box-shadow .15s;
-    }
-    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(255,107,53,.4); }
-    .btn-secondary {
-      background: rgba(255,255,255,0.1);
+      background: var(--cardinal);
       color: #fff;
       font-weight: 700;
-      font-size: 1rem;
-      padding: 16px 32px;
-      border: 1.5px solid rgba(255,255,255,0.25);
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background .15s;
-    }
-    .btn-secondary:hover { background: rgba(255,255,255,0.18); }
-
-    /* ── SECTION TITLE ── */
-    .section-title {
-      text-align: center;
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.4);
-      margin-bottom: 20px;
-    }
-
-    /* ── GAME CARDS (active sessions) ── */
-    .section { padding: 0 20px 48px; max-width: 640px; margin: 0 auto; }
-
-    .game-card {
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 18px;
-      padding: 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      margin-bottom: 12px;
+      font-size: 0.95rem;
+      padding: 14px 30px;
+      border: none;
+      border-radius: 6px;
       cursor: pointer;
       transition: background .15s, transform .15s;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      letter-spacing: 0.02em;
     }
-    .game-card:hover { background: rgba(255,255,255,0.1); transform: translateX(4px); }
+    .btn-primary:hover { background: var(--cardinal2); transform: translateY(-2px); }
+    .btn-secondary {
+      background: transparent;
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 14px 30px;
+      border: 1.5px solid rgba(255,255,255,0.3);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background .15s;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.08); }
+
+    /* ── SHARED LAYOUT ── */
+    .section { padding: 0 20px 52px; max-width: 640px; margin: 0 auto; }
+    .section-title {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 18px;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    .section-title.cardinal { color: rgba(220,120,120,0.7); }
+
+    /* ── ACTIVE GAME CARDS ── */
+    .game-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: background .15s, border-color .15s;
+    }
+    .game-card:hover { background: rgba(255,255,255,0.09); border-color: rgba(140,21,21,0.4); }
     .game-icon {
-      font-size: 2.2rem;
-      width: 56px; height: 56px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 14px;
+      font-size: 2rem;
+      width: 52px; height: 52px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 10px;
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
-    .game-info { flex: 1; }
-    .game-name { font-weight: 800; font-size: 1rem; margin-bottom: 4px; }
-    .game-meta { font-size: 0.8rem; color: rgba(255,255,255,0.5); }
+    .game-info { flex: 1; min-width: 0; font-family: 'Segoe UI', system-ui, sans-serif; }
+    .game-name { font-weight: 700; font-size: 0.92rem; margin-bottom: 4px; font-family: 'Georgia', serif; }
+    .game-meta { font-size: 0.76rem; color: rgba(255,255,255,0.45); }
     .game-right { text-align: right; flex-shrink: 0; }
     .join-btn {
-      background: var(--yellow);
-      color: #1a1a2e;
-      font-weight: 800;
-      font-size: 0.8rem;
-      padding: 8px 16px;
+      background: var(--cardinal);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.75rem;
+      padding: 7px 14px;
       border: none;
-      border-radius: 50px;
+      border-radius: 5px;
       cursor: pointer;
-      margin-bottom: 6px;
-      white-space: nowrap;
+      margin-bottom: 5px;
+      display: block;
+      font-family: 'Segoe UI', system-ui, sans-serif;
     }
-    .join-btn:hover { background: var(--orange); color: #fff; }
-    .countdown {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.4);
-    }
+    .join-btn:hover { background: var(--cardinal2); }
+    .countdown { font-size: 0.68rem; color: rgba(255,255,255,0.35); font-family: 'Segoe UI', system-ui, sans-serif; }
 
-    /* ── GAME TYPE PILLS ── */
-    .pill-row {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      justify-content: center;
-      margin-bottom: 48px;
-    }
+    /* ── PILLS ── */
+    .pill-row { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-bottom: 48px; }
     .pill {
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 50px;
-      padding: 10px 18px;
-      font-size: 0.88rem;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      padding: 8px 16px;
+      font-size: 0.82rem;
       cursor: pointer;
       transition: background .15s, border-color .15s;
-      display: flex; align-items: center; gap: 8px;
+      font-family: 'Segoe UI', system-ui, sans-serif;
     }
     .pill:hover, .pill.active {
-      background: rgba(255,212,59,0.15);
-      border-color: var(--yellow);
-      color: var(--yellow);
+      background: rgba(140,21,21,0.2);
+      border-color: rgba(140,21,21,0.6);
+      color: #f0a0a0;
+    }
+
+    /* ── MY HISTORY ── */
+    .my-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .stat-box {
+      background: rgba(140,21,21,0.12);
+      border: 1px solid rgba(140,21,21,0.25);
+      border-radius: 10px;
+      padding: 16px 12px;
+      text-align: center;
+    }
+    .stat-num {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: #e8a0a0;
+      font-family: 'Georgia', serif;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.4);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    .history-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px;
+      margin-bottom: 12px;
+    }
+    .history-top {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .history-icon {
+      font-size: 1.6rem;
+      width: 44px; height: 44px;
+      background: rgba(255,255,255,0.07);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .history-info { flex: 1; font-family: 'Segoe UI', system-ui, sans-serif; }
+    .history-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 3px; font-family: 'Georgia', serif; }
+    .history-date { font-size: 0.7rem; color: rgba(255,255,255,0.38); }
+    .history-tag {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 4px;
+      white-space: nowrap;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    .tag-again { background: rgba(81,207,102,0.12); color: var(--green); }
+    .tag-new   { background: rgba(77,171,247,0.12); color: var(--blue); }
+
+    .crew-label {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.3);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    .crew-row { display: flex; flex-wrap: wrap; gap: 7px; }
+    .crew-chip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 50px;
+      padding: 5px 11px;
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all .15s;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    .crew-chip:hover { background: rgba(140,21,21,0.15); border-color: rgba(140,21,21,0.4); }
+    .crew-chip.met-again {
+      border-color: rgba(81,207,102,0.35);
+      color: var(--green);
+    }
+    .crew-chip.met-again:hover { background: rgba(81,207,102,0.1); }
+    .avatar {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      font-size: 0.6rem;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    .reconnect-notice {
+      margin-top: 16px;
+      background: rgba(218,165,32,0.07);
+      border: 1px dashed rgba(218,165,32,0.25);
+      border-radius: 10px;
+      padding: 13px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .reconnect-notice p {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    .reconnect-notice p strong { color: var(--gold); }
+    .reconnect-btn {
+      background: var(--cardinal);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.72rem;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
     }
 
     /* ── HOW IT WORKS ── */
     .steps {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
+      gap: 14px;
       margin-bottom: 48px;
     }
     @media (max-width: 480px) { .steps { grid-template-columns: 1fr; } }
     .step {
-      background: rgba(255,255,255,0.05);
-      border-radius: 16px;
-      padding: 24px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 22px 14px;
       text-align: center;
     }
     .step-num {
-      width: 36px; height: 36px;
-      background: linear-gradient(135deg, var(--yellow), var(--orange));
-      color: #1a1a2e;
-      font-weight: 900;
-      font-size: 1rem;
+      width: 32px; height: 32px;
+      background: var(--cardinal);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.9rem;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 12px;
+      margin: 0 auto 10px;
+      font-family: 'Segoe UI', system-ui, sans-serif;
     }
-    .step h3 { font-size: 0.95rem; font-weight: 800; margin-bottom: 6px; }
-    .step p  { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.5; }
+    .step h3 { font-size: 0.9rem; font-weight: 700; margin-bottom: 6px; font-family: 'Georgia', serif; }
+    .step p  { font-size: 0.76rem; color: rgba(255,255,255,0.45); line-height: 1.55; font-family: 'Segoe UI', system-ui, sans-serif; }
+
+    /* ── DIVIDER ── */
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(140,21,21,0.2);
+      margin: 0 20px 48px;
+      max-width: 600px;
+      margin-left: auto; margin-right: auto;
+    }
 
     /* ── FOOTER ── */
     footer {
       text-align: center;
       padding: 24px;
-      font-size: 0.75rem;
-      color: rgba(255,255,255,0.25);
-      border-top: 1px solid rgba(255,255,255,0.06);
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.2);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      letter-spacing: 0.04em;
     }
 
-    /* ── MODAL overlay ── */
+    /* ── MODAL ── */
     .overlay {
       display: none;
       position: fixed; inset: 0;
-      background: rgba(0,0,0,0.75);
+      background: rgba(0,0,0,0.8);
       z-index: 100;
       align-items: flex-end;
       justify-content: center;
     }
     .overlay.open { display: flex; }
     .modal {
-      background: #16213e;
-      border-radius: 24px 24px 0 0;
+      background: #1a1228;
+      border-radius: 18px 18px 0 0;
+      border-top: 2px solid rgba(140,21,21,0.5);
       padding: 32px 28px 40px;
       width: 100%;
       max-width: 480px;
       animation: slideUp .25s ease;
     }
     @keyframes slideUp { from { transform: translateY(60px); opacity: 0; } }
-    .modal h2 { font-size: 1.4rem; font-weight: 900; margin-bottom: 8px; }
-    .modal p  { font-size: 0.9rem; color: rgba(255,255,255,0.6); margin-bottom: 24px; line-height: 1.5; }
-    .modal-actions { display: flex; gap: 12px; flex-direction: column; }
+    .modal h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; font-family: 'Georgia', serif; }
+    .modal p  { font-size: 0.88rem; color: rgba(255,255,255,0.55); margin-bottom: 24px; line-height: 1.6; font-family: 'Segoe UI', system-ui, sans-serif; }
+    .modal-actions { display: flex; gap: 10px; flex-direction: column; }
     .modal-btn {
-      background: linear-gradient(135deg, var(--yellow), var(--orange));
-      color: #1a1a2e;
-      font-weight: 800;
-      font-size: 1rem;
-      padding: 16px;
-      border: none; border-radius: 14px;
+      background: var(--cardinal);
+      color: #fff;
+      font-weight: 700;
+      font-size: 0.95rem;
+      padding: 15px;
+      border: none; border-radius: 8px;
       cursor: pointer;
-      text-align: center;
+      font-family: 'Segoe UI', system-ui, sans-serif;
     }
+    .modal-btn:hover { background: var(--cardinal2); }
     .modal-cancel {
       background: transparent;
-      color: rgba(255,255,255,0.5);
-      font-size: 0.9rem;
+      color: rgba(255,255,255,0.4);
+      font-size: 0.85rem;
       border: none;
       cursor: pointer;
       padding: 8px;
+      font-family: 'Segoe UI', system-ui, sans-serif;
     }
   </style>
 </head>
@@ -322,8 +504,14 @@
 
 <!-- NAV -->
 <nav>
-  <div class="logo">Stanford <span>Squid Game</span> 🦑</div>
-  <div class="nav-badge">📍 Stanford</div>
+  <div class="logo">
+    <div class="s-mark">S</div>
+    <div class="logo-text">Stanford <span>Squid Game</span></div>
+  </div>
+  <div class="nav-right">
+    <div class="nav-my" onclick="document.getElementById('history').scrollIntoView({behavior:'smooth'})">My Games</div>
+    <div class="nav-badge">📍 On Campus</div>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -335,7 +523,7 @@
 
   <div class="live-strip">
     <div class="pulse"></div>
-    <span><strong id="live-count">23</strong> students playing right now</span>
+    <span><strong id="live-count">23</strong> Cardinals playing right now</span>
   </div>
 
   <div class="cta-row">
@@ -345,7 +533,7 @@
 </div>
 
 <!-- ACTIVE SESSIONS -->
-<div class="section">
+<div class="section" style="margin-top:40px">
   <p class="section-title">🔥 Happening Now — White Plaza</p>
 
   <div class="game-card" onclick="openModal('join')">
@@ -389,15 +577,138 @@
 <div class="section">
   <p class="section-title">Pick a vibe</p>
   <div class="pill-row">
-    <div class="pill active">🌍 All games</div>
+    <div class="pill active">🌍 All</div>
     <div class="pill">🇰🇷 Korean</div>
     <div class="pill">🇺🇸 American</div>
     <div class="pill">🇮🇳 Indian</div>
     <div class="pill">🇧🇷 Brazilian</div>
     <div class="pill">🇯🇵 Japanese</div>
-    <div class="pill">🎲 Surprise me</div>
+    <div class="pill">🎲 Surprise</div>
   </div>
 </div>
+
+<hr class="divider" />
+
+<!-- MY HISTORY -->
+<div class="section" id="history">
+  <p class="section-title cardinal">⬡ My Play History</p>
+
+  <!-- stats row -->
+  <div class="my-stats">
+    <div class="stat-box">
+      <div class="stat-num">7</div>
+      <div class="stat-label">Games Played</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">19</div>
+      <div class="stat-label">People Met</div>
+    </div>
+    <div class="stat-box">
+      <div class="stat-num">4</div>
+      <div class="stat-label">Reunions</div>
+    </div>
+  </div>
+
+  <!-- session 1 -->
+  <div class="history-card">
+    <div class="history-top">
+      <div class="history-icon">🇰🇷</div>
+      <div class="history-info">
+        <div class="history-name">경찰과 도둑 (Cops & Robbers)</div>
+        <div class="history-date">June 18 · Oval Lawn · 1 hr 20 min</div>
+      </div>
+      <span class="history-tag tag-again">2× played</span>
+    </div>
+    <div class="crew-label">People you played with</div>
+    <div class="crew-row">
+      <div class="crew-chip met-again" title="Played together again!">
+        <div class="avatar" style="background:linear-gradient(135deg,#FF6B6B,#FF4D8D)">🦊</div>
+        RedFox42
+      </div>
+      <div class="crew-chip met-again">
+        <div class="avatar" style="background:linear-gradient(135deg,#4DABF7,#845EF7)">🐋</div>
+        BlueWhale
+      </div>
+      <div class="crew-chip">
+        <div class="avatar" style="background:linear-gradient(135deg,#51CF66,#20C997)">🌿</div>
+        GreenLeaf
+      </div>
+      <div class="crew-chip">
+        <div class="avatar" style="background:linear-gradient(135deg,#FFD43B,#FF6B35)">🌙</div>
+        SilverMoon
+      </div>
+      <div class="crew-chip">
+        <div class="avatar" style="background:linear-gradient(135deg,#cc5de8,#845ef7)">🪐</div>
+        CosmicP
+      </div>
+    </div>
+    <div class="reconnect-notice">
+      <p><strong>RedFox42 & BlueWhale</strong> are playing Kabaddi right now nearby.</p>
+      <button class="reconnect-btn" onclick="openModal('join')">See Game →</button>
+    </div>
+  </div>
+
+  <!-- session 2 -->
+  <div class="history-card">
+    <div class="history-top">
+      <div class="history-icon">🇯🇵</div>
+      <div class="history-info">
+        <div class="history-name">Daruma-san ga Koronda</div>
+        <div class="history-date">June 12 · Main Quad · 45 min</div>
+      </div>
+      <span class="history-tag tag-new">First time</span>
+    </div>
+    <div class="crew-label">People you played with</div>
+    <div class="crew-row">
+      <div class="crew-chip">
+        <div class="avatar" style="background:linear-gradient(135deg,#FF6B35,#F03E3E)">🦁</div>
+        TigerSun
+      </div>
+      <div class="crew-chip">
+        <div class="avatar" style="background:linear-gradient(135deg,#4DABF7,#1c7ed6)">❄️</div>
+        IceBear
+      </div>
+      <div class="crew-chip">
+        <div class="avatar" style="background:linear-gradient(135deg,#ff922b,#ffd43b)">🍊</div>
+        OrangeZest
+      </div>
+      <div class="crew-chip">
+        <div class="avatar" style="background:linear-gradient(135deg,#63e6be,#20c997)">🌊</div>
+        WaveRider
+      </div>
+    </div>
+  </div>
+
+  <!-- session 3 -->
+  <div class="history-card">
+    <div class="history-top">
+      <div class="history-icon">🇧🇷</div>
+      <div class="history-info">
+        <div class="history-name">Amarelinha (Hopscotch)</div>
+        <div class="history-date">June 5 · MemChu steps · 30 min</div>
+      </div>
+      <span class="history-tag tag-new">First time</span>
+    </div>
+    <div class="crew-label">People you played with</div>
+    <div class="crew-row">
+      <div class="crew-chip met-again">
+        <div class="avatar" style="background:linear-gradient(135deg,#51CF66,#20C997)">🌿</div>
+        GreenLeaf
+      </div>
+      <div class="crew-chip">
+        <div class="avatar" style="background:linear-gradient(135deg,#845ef7,#cc5de8)">🔮</div>
+        NightOwl
+      </div>
+      <div class="crew-chip">
+        <div class="avatar" style="background:linear-gradient(135deg,#f03e3e,#ff6b6b)">🍒</div>
+        CherryBomb
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<hr class="divider" />
 
 <!-- HOW IT WORKS -->
 <div class="section">
@@ -411,19 +722,19 @@
     <div class="step">
       <div class="step-num">2</div>
       <h3>Show up</h3>
-      <p>Walk over to the spot. Introduce yourself — or don't.</p>
+      <p>Walk over. Introduce yourself — or don't.</p>
     </div>
     <div class="step">
       <div class="step-num">3</div>
       <h3>Play & bounce</h3>
-      <p>Stay for 10 min or 2 hours. Leave when you want.</p>
+      <p>Stay 10 min or 2 hours. Leave when you want.</p>
     </div>
   </div>
 </div>
 
 <!-- FOOTER -->
 <footer>
-  Stanford Squid Game · LG U+ Lifestyle Innovation Workshop
+  STANFORD SQUID GAME &nbsp;·&nbsp; LG U+ LIFESTYLE INNOVATION WORKSHOP
 </footer>
 
 <!-- MODAL -->
@@ -434,7 +745,6 @@
 </div>
 
 <script>
-  // Animate live count
   let count = 23;
   setInterval(() => {
     count += Math.random() > 0.5 ? 1 : -1;
@@ -442,7 +752,6 @@
     document.getElementById('live-count').textContent = count;
   }, 3000);
 
-  // Pill toggle
   document.querySelectorAll('.pill').forEach(p => {
     p.addEventListener('click', () => {
       document.querySelectorAll('.pill').forEach(x => x.classList.remove('active'));
@@ -451,16 +760,16 @@
   });
 
   const joinContent = `
-    <h2>⚡ Jump In</h2>
-    <p>Pick any game below and just walk over. No registration needed — tell them PlayPop sent you 😄</p>
+    <h2>Jump In</h2>
+    <p>Pick any game and just walk over. No registration needed — just show up.</p>
     <div class="modal-actions">
       <button class="modal-btn">📍 Show me on map</button>
       <button class="modal-cancel" onclick="closeModal()">Maybe later</button>
     </div>`;
 
   const hostContent = `
-    <h2>🎮 Start a Game</h2>
-    <p>Choose a game, drop a pin on campus, and PlayPop will let nearby students know. People can wander over — no RSVP, no commitment.</p>
+    <h2>Start a Game</h2>
+    <p>Choose a game, drop a pin on campus, and nearby students will know. No RSVP, no commitment — just play.</p>
     <div class="modal-actions">
       <button class="modal-btn">🚀 Create a spot</button>
       <button class="modal-cancel" onclick="closeModal()">Not now</button>
