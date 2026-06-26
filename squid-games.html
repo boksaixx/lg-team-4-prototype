@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Squid Games @ Stanford — Meet again, play again</title>
+
+  <!-- Clean typography (renders Latin + Korean nicely) -->
+  <link rel="stylesheet" as="style" crossorigin
+        href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+
+  <!-- Tailwind (Play CDN — no build step) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            squid: {
+              pink:  '#FF2E74',
+              rose:  '#E8186E',
+              teal:  '#12B5A5',
+              mint:  '#E7FBF6',
+              cream: '#FFF7F1',
+              ink:   '#15151E',
+            },
+          },
+          fontFamily: {
+            sans: ['Pretendard', 'ui-sans-serif', 'system-ui', 'Segoe UI', 'sans-serif'],
+          },
+          boxShadow: {
+            soft: '0 10px 40px -12px rgba(232, 24, 110, 0.18)',
+            card: '0 2px 18px -8px rgba(21, 21, 30, 0.18)',
+          },
+          keyframes: {
+            floaty: { '0%,100%': { transform: 'translateY(0)' }, '50%': { transform: 'translateY(-8px)' } },
+            pop:    { '0%': { transform: 'scale(.85)', opacity: 0 }, '100%': { transform: 'scale(1)', opacity: 1 } },
+          },
+          animation: {
+            floaty: 'floaty 5s ease-in-out infinite',
+            pop: 'pop .2s ease-out',
+          },
+        },
+      },
+    };
+  </script>
+
+  <!-- React + Babel (in-browser JSX, prototype only) -->
+  <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { -webkit-font-smoothing: antialiased; }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-squid-cream font-sans text-squid-ink">
+  <div id="root"></div>
+
+  <script type="text/babel" data-presets="react">
+    const { useState } = React;
+
+    /* ───────────────────────── MOCK DATA (hardcoded) ───────────────────────── */
+
+    const ME = { name: 'Minseo', streakWeeks: 3, peopleMet: 24, gamesPlayed: 9, visits: 4, goal: 5 };
+
+    // Next meetup
+    const NEXT = {
+      dday: 3,
+      date: 'Sat, Jun 28',
+      time: '3:00 PM',
+      place: 'Wilbur Field',
+      cadence: 'Every Saturday · we gather at White Plaza',
+      attending: 38,
+      knownGoing: 7,
+      games: ['Red Light, Green Light', 'Capture the Flag', 'Freeze Tag', 'Cops & Robbers'],
+      faces: [
+        { n: 'Jiwoo', c: 'from-rose-400 to-pink-500' },
+        { n: 'Hajun', c: 'from-teal-400 to-emerald-500' },
+        { n: 'Mia',   c: 'from-amber-400 to-orange-500' },
+        { n: 'Seoyeon', c: 'from-violet-400 to-fuchsia-500' },
+        { n: 'Leo',   c: 'from-sky-400 to-indigo-500' },
+      ],
+    };
+
+    // People you met last time (reconnecting = the whole point)
+    const MET_LAST = [
+      { n: 'Jiwoo', d: 'Psychology · ’23', game: 'Teammates in Capture the Flag', c: 'from-rose-400 to-pink-500' },
+      { n: 'Mia',   d: 'CS · ’24',        game: 'Tagged you back in Freeze Tag', c: 'from-amber-400 to-orange-500' },
+      { n: 'Hajun', d: 'Mech. Eng · ’22', game: 'Rivals in Cops & Robbers', c: 'from-teal-400 to-emerald-500' },
+      { n: 'Noah',  d: 'Economics · ’23', game: 'Last one standing in RLGL', c: 'from-sky-400 to-indigo-500' },
+      { n: 'Seoyeon', d: 'Design · ’24',  game: 'Teammates in Capture the Flag', c: 'from-violet-400 to-fuchsia-500' },
+    ];
+
+    // My crew (people already added)
+    const CREW = [
+      { n: 'Yuna',  online: true,  note: 'Going next time ✓', c: 'from-pink-400 to-rose-500' },
+      { n: 'Ethan', online: true,  note: 'Not sure yet', c: 'from-emerald-400 to-teal-500' },
+      { n: 'Doyun', online: false, note: 'Going next time ✓', c: 'from-orange-400 to-amber-500' },
+      { n: 'Sofia', online: false, note: 'Not sure yet', c: 'from-indigo-400 to-sky-500' },
+    ];
+
+    // This month's regulars
+    const REGULARS = [
+      { n: 'Doyun', weeks: 11, c: 'from-orange-400 to-amber-500' },
+      { n: 'Yuna',  weeks: 9,  c: 'from-pink-400 to-rose-500' },
+      { n: 'Ethan', weeks: 8,  c: 'from-emerald-400 to-teal-500' },
+    ];
+
+    // Community feed
+    const FEED = [
+      {
+        author: 'Doyun', avatar: 'from-orange-400 to-amber-500', when: '2 days ago', likes: 32,
+        text: 'Our Capture the Flag team survived to the very end last week 🏴 Rematch this Saturday — you’re going down.',
+        tag: 'Capture the Flag', photo: 'from-rose-200 to-pink-300', emoji: '🏴',
+      },
+      {
+        author: 'Mia', avatar: 'from-amber-400 to-orange-500', when: '4 days ago', likes: 21,
+        text: 'Who’s in for Red Light, Green Light on Saturday? Total beginners welcome — you’ll click with everyone in 5 min 😆',
+        tag: 'Red Light, Green Light', photo: 'from-teal-100 to-emerald-200', emoji: '🌺',
+      },
+    ];
+
+    /* ───────────────────────── small pieces ───────────────────────── */
+
+    // Squid Game shape motif ○ △ □
+    function Shapes({ className = '' }) {
+      return (
+        <span className={'inline-flex items-center gap-1 ' + className}>
+          <span className="w-2.5 h-2.5 rounded-full border-2 border-current" />
+          <span className="w-0 h-0 border-l-[6px] border-r-[6px] border-b-[10px] border-l-transparent border-r-transparent border-b-current" />
+          <span className="w-2.5 h-2.5 border-2 border-current" />
+        </span>
+      );
+    }
+
+    function Avatar({ person, size = 'w-11 h-11', ring = 'ring-2 ring-white' }) {
+      return (
+        <div className={`${size} ${ring} rounded-full bg-gradient-to-br ${person.c} text-white font-bold
+                         flex items-center justify-center shadow-sm select-none`}>
+          {person.n[0]}
+        </div>
+      );
+    }
+
+    function Pill({ children }) {
+      return (
+        <span className="px-3 py-1.5 rounded-full bg-white/85 text-squid-rose text-sm font-semibold
+                         border border-squid-pink/15 whitespace-nowrap">
+          {children}
+        </span>
+      );
+    }
+
+    function SectionTitle({ kicker, title, sub }) {
+      return (
+        <div className="mb-4">
+          {kicker && <p className="text-xs font-bold tracking-widest text-squid-pink uppercase mb-1">{kicker}</p>}
+          <h2 className="text-xl font-extrabold tracking-tight">{title}</h2>
+          {sub && <p className="text-sm text-squid-ink/55 mt-1">{sub}</p>}
+        </div>
+      );
+    }
+
+    /* ───────────────────────── top bar ───────────────────────── */
+
+    function TopBar() {
+      return (
+        <header className="sticky top-0 z-30 backdrop-blur bg-squid-cream/80 border-b border-black/5">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-squid-pink to-squid-rose
+                              text-white flex items-center justify-center shadow-soft">
+                <Shapes />
+              </div>
+              <div className="leading-tight">
+                <p className="font-extrabold tracking-tight">Squid Games <span className="text-squid-rose">@ Stanford</span></p>
+                <p className="text-[11px] text-squid-ink/45 -mt-0.5 hidden sm:block">Childhood games, together again</p>
+              </div>
+            </div>
+
+            <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-squid-ink/60">
+              <a href="#home" className="text-squid-ink">Home</a>
+              <a href="#reconnect" className="hover:text-squid-ink transition">People</a>
+              <a href="#recap" className="hover:text-squid-ink transition">Last meetup</a>
+              <a href="#feed" className="hover:text-squid-ink transition">Feed</a>
+            </nav>
+
+            <div className="flex items-center gap-2">
+              <button className="relative w-10 h-10 rounded-full bg-white shadow-card grid place-items-center"
+                      aria-label="Notifications">
+                <span className="text-lg">🔔</span>
+                <span className="absolute top-2 right-2 w-2.5 h-2.5 bg-squid-pink rounded-full ring-2 ring-white" />
+              </button>
+              <div className="w-10 h-10 rounded-full bg-gradient-to-br from-fuchsia-400 to-pink-600
+                              text-white font-bold grid place-items-center shadow-card">{ME.name[0]}</div>
+            </div>
+          </div>
+        </header>
+      );
+    }
+
+    /* ───────────────────────── hero: next meetup ───────────────────────── */
+
+    function NextGatheringHero() {
+      const [going, setGoing] = useState(false);
+
+      return (
+        <section id="home"
+          className="relative overflow-hidden rounded-3xl text-white shadow-soft
+                     bg-gradient-to-br from-squid-pink via-squid-rose to-fuchsia-600 p-6 sm:p-8">
+          {/* shape motif decoration */}
+          <div className="pointer-events-none absolute inset-0 opacity-20">
+            <div className="absolute -right-6 -top-6 w-40 h-40 rounded-full border-[10px] border-white animate-floaty" />
+            <div className="absolute right-24 top-28 w-16 h-16 border-[8px] border-white rotate-12" />
+            <div className="absolute -left-4 bottom-6 w-0 h-0 border-l-[34px] border-r-[34px] border-b-[58px]
+                            border-l-transparent border-r-transparent border-b-white/90 -rotate-12" />
+          </div>
+
+          <div className="relative">
+            <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur px-3 py-1 rounded-full
+                            text-xs font-bold tracking-wide mb-4">
+              <span className="w-2 h-2 rounded-full bg-white animate-pulse" /> {NEXT.dday} days until the next game
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl font-extrabold leading-tight tracking-tight">
+              This Saturday —<br /> let’s run around together again
+            </h1>
+            <p className="mt-3 text-white/85 max-w-md leading-relaxed">
+              The friends you met last week are coming too. One more round and you’ll really click —
+              <span className="font-semibold text-white"> that’s why we meet every week.</span>
+            </p>
+
+            {/* schedule */}
+            <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 text-sm font-medium">
+              <span className="inline-flex items-center gap-1.5">🗓️ {NEXT.date}</span>
+              <span className="inline-flex items-center gap-1.5">⏰ {NEXT.time}</span>
+              <span className="inline-flex items-center gap-1.5">📍 {NEXT.place}</span>
+            </div>
+
+            {/* game lineup */}
+            <div className="mt-4 flex flex-wrap gap-2">
+              {NEXT.games.map(g => <Pill key={g}>{g}</Pill>)}
+            </div>
+
+            {/* attendees + CTA */}
+            <div className="mt-6 flex flex-col sm:flex-row sm:items-center gap-4">
+              <div className="flex items-center">
+                <div className="flex -space-x-3">
+                  {NEXT.faces.map(f => <Avatar key={f.n} person={f} size="w-10 h-10" ring="ring-2 ring-squid-rose" />)}
+                </div>
+                <div className="ml-3 text-sm leading-tight">
+                  <p className="font-bold">+{NEXT.attending} going</p>
+                  <p className="text-white/80">{NEXT.knownGoing} people you know are going too</p>
+                </div>
+              </div>
+
+              <div className="sm:ml-auto flex items-center gap-2 w-full sm:w-auto">
+                <button
+                  onClick={() => setGoing(v => !v)}
+                  className={`flex-1 sm:flex-none px-6 py-3.5 rounded-2xl font-extrabold transition active:scale-95
+                    ${going ? 'bg-white text-squid-rose' : 'bg-squid-ink text-white hover:bg-black'}`}>
+                  {going ? 'You’re going ✓' : 'I’m in'}
+                </button>
+                {going && (
+                  <button className="px-4 py-3.5 rounded-2xl font-bold bg-white/20 backdrop-blur
+                                     hover:bg-white/30 transition animate-pop whitespace-nowrap">
+                    Invite friends
+                  </button>
+                )}
+              </div>
+            </div>
+
+            <p className="mt-4 text-xs text-white/70">🔁 {NEXT.cadence}</p>
+          </div>
+        </section>
+      );
+    }
+
+    /* ───────────────────────── reconnect: people you met last time ───────────────────────── */
+
+    function ReconnectCard({ p }) {
+      const [added, setAdded] = useState(false);
+      return (
+        <div className="min-w-[210px] snap-start bg-white rounded-2xl shadow-card p-4 flex flex-col">
+          <div className="flex items-center gap-3">
+            <Avatar person={p} size="w-12 h-12" />
+            <div className="leading-tight">
+              <p className="font-bold">{p.n}</p>
+              <p className="text-xs text-squid-ink/50">{p.d}</p>
+            </div>
+          </div>
+          <p className="mt-3 text-xs text-squid-ink/60 bg-squid-mint rounded-lg px-2.5 py-1.5">
+            ⛳ {p.game}
+          </p>
+          <button
+            onClick={() => setAdded(v => !v)}
+            className={`mt-3 py-2.5 rounded-xl text-sm font-bold transition active:scale-95
+              ${added ? 'bg-squid-mint text-squid-teal' : 'bg-squid-rose text-white hover:bg-squid-pink'}`}>
+            {added ? 'Requested ✓' : '+ Add friend'}
+          </button>
+        </div>
+      );
+    }
+
+    function Reconnect() {
+      return (
+        <section id="reconnect">
+          <SectionTitle
+            kicker="Reconnect"
+            title="People you met last time"
+            sub="Faces worth seeing again. Add them so you’re on the same team next week." />
+          <div className="flex gap-3 overflow-x-auto no-scrollbar snap-x pb-1 -mx-1 px-1">
+            {MET_LAST.map(p => <ReconnectCard key={p.n} p={p} />)}
+          </div>
+        </section>
+      );
+    }
+
+    /* ───────────────────────── last meetup recap ───────────────────────── */
+
+    function Recap() {
+      const photos = [
+        { g: 'from-rose-300 to-pink-400', e: '🏴' },
+        { g: 'from-teal-200 to-emerald-400', e: '🧊' },
+        { g: 'from-amber-200 to-orange-400', e: '🏃' },
+        { g: 'from-violet-300 to-fuchsia-400', e: '🌺' },
+      ];
+      return (
+        <section id="recap" className="bg-white rounded-3xl shadow-card p-6">
+          <SectionTitle kicker="Last Saturday" title="Here’s how we played" />
+          <div className="grid grid-cols-4 gap-2">
+            {photos.map((p, i) => (
+              <div key={i} className={`aspect-square rounded-2xl bg-gradient-to-br ${p.g}
+                                       grid place-items-center text-2xl sm:text-3xl shadow-inner`}>
+                {p.e}
+              </div>
+            ))}
+          </div>
+          <div className="mt-4 flex flex-wrap items-center gap-3 text-sm">
+            <span className="font-bold">📸 28 photos</span>
+            <span className="text-squid-ink/40">·</span>
+            <span>You played Capture the Flag with <b className="text-squid-rose">12 people</b></span>
+            <span className="text-squid-ink/40">·</span>
+            <span><b className="text-squid-rose">41</b> showed up</span>
+          </div>
+          <a href="#recap" className="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-squid-rose">
+            See the full album →
+          </a>
+        </section>
+      );
+    }
+
+    /* ───────────────────────── community feed ───────────────────────── */
+
+    function FeedCard({ post }) {
+      const [liked, setLiked] = useState(false);
+      return (
+        <article className="bg-white rounded-3xl shadow-card p-5">
+          <div className="flex items-center gap-3">
+            <Avatar person={{ n: post.author, c: post.avatar }} size="w-10 h-10" ring="" />
+            <div className="leading-tight">
+              <p className="font-bold text-sm">{post.author}</p>
+              <p className="text-xs text-squid-ink/45">{post.when}</p>
+            </div>
+            <span className="ml-auto text-xs font-semibold text-squid-teal bg-squid-mint px-2.5 py-1 rounded-full">
+              #{post.tag}
+            </span>
+          </div>
+          <p className="mt-3 text-[15px] leading-relaxed">{post.text}</p>
+          <div className={`mt-3 h-36 rounded-2xl bg-gradient-to-br ${post.photo} grid place-items-center text-4xl`}>
+            {post.emoji}
+          </div>
+          <div className="mt-3 flex items-center gap-4 text-sm">
+            <button onClick={() => setLiked(v => !v)}
+                    className={`inline-flex items-center gap-1.5 font-semibold transition active:scale-90
+                      ${liked ? 'text-squid-pink' : 'text-squid-ink/55'}`}>
+              {liked ? '❤️' : '🤍'} {post.likes + (liked ? 1 : 0)}
+            </button>
+            <button className="inline-flex items-center gap-1.5 font-semibold text-squid-ink/55">💬 Comment</button>
+            <button className="ml-auto font-semibold text-squid-rose">Join in →</button>
+          </div>
+        </article>
+      );
+    }
+
+    function Feed() {
+      return (
+        <section id="feed">
+          <SectionTitle kicker="Community" title="Stay connected between meetups" />
+          <div className="space-y-4">
+            {FEED.map((p, i) => <FeedCard key={i} post={p} />)}
+          </div>
+        </section>
+      );
+    }
+
+    /* ───────────────────────── right rail ───────────────────────── */
+
+    function BelongingCard() {
+      const pct = Math.round((ME.visits / ME.goal) * 100);
+      return (
+        <div className="bg-gradient-to-br from-squid-ink to-[#26283b] text-white rounded-3xl p-5 shadow-card">
+          <p className="text-sm text-white/70">{ME.name}, you’re</p>
+          <p className="text-lg font-extrabold">one step from Regular status 🎯</p>
+
+          <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+            <div className="bg-white/10 rounded-2xl py-3">
+              <p className="text-xl font-extrabold text-squid-pink">🔥{ME.streakWeeks}</p>
+              <p className="text-[11px] text-white/65 mt-0.5">week streak</p>
+            </div>
+            <div className="bg-white/10 rounded-2xl py-3">
+              <p className="text-xl font-extrabold text-squid-teal">{ME.peopleMet}</p>
+              <p className="text-[11px] text-white/65 mt-0.5">people met</p>
+            </div>
+            <div className="bg-white/10 rounded-2xl py-3">
+              <p className="text-xl font-extrabold text-amber-300">{ME.gamesPlayed}</p>
+              <p className="text-[11px] text-white/65 mt-0.5">games played</p>
+            </div>
+          </div>
+
+          <div className="mt-4">
+            <div className="flex justify-between text-xs text-white/70 mb-1.5">
+              <span>Regular badge progress</span><span>{ME.visits}/{ME.goal} meetups</span>
+            </div>
+            <div className="h-2.5 bg-white/15 rounded-full overflow-hidden">
+              <div className="h-full bg-gradient-to-r from-squid-pink to-amber-300 rounded-full" style={{ width: pct + '%' }} />
+            </div>
+            <p className="text-xs text-white/60 mt-2">Show up one more time to earn the <b className="text-white">Regular</b> badge!</p>
+          </div>
+        </div>
+      );
+    }
+
+    function MyCrew() {
+      return (
+        <div className="bg-white rounded-3xl shadow-card p-5">
+          <div className="flex items-center justify-between mb-3">
+            <h3 className="font-extrabold">My Crew</h3>
+            <a href="#reconnect" className="text-xs font-bold text-squid-rose">See all</a>
+          </div>
+          <ul className="space-y-3">
+            {CREW.map(c => (
+              <li key={c.n} className="flex items-center gap-3">
+                <div className="relative">
+                  <Avatar person={c} size="w-10 h-10" ring="" />
+                  {c.online && <span className="absolute -bottom-0.5 -right-0.5 w-3 h-3 bg-emerald-400 rounded-full ring-2 ring-white" />}
+                </div>
+                <div className="leading-tight min-w-0">
+                  <p className="font-bold text-sm truncate">{c.n}</p>
+                  <p className={`text-xs ${c.note.includes('✓') ? 'text-squid-teal' : 'text-squid-ink/45'}`}>{c.note}</p>
+                </div>
+                <button className="ml-auto text-xs font-bold text-squid-rose bg-squid-mint px-3 py-1.5 rounded-full whitespace-nowrap">
+                  Nudge
+                </button>
+              </li>
+            ))}
+          </ul>
+          <button className="mt-4 w-full py-2.5 rounded-xl border-2 border-dashed border-squid-pink/30
+                             text-sm font-bold text-squid-rose hover:bg-squid-mint transition">
+            + Invite a friend to the next meetup
+          </button>
+        </div>
+      );
+    }
+
+    function Regulars() {
+      const medals = ['🥇', '🥈', '🥉'];
+      return (
+        <div className="bg-white rounded-3xl shadow-card p-5">
+          <h3 className="font-extrabold mb-1">This month’s regulars 🏅</h3>
+          <p className="text-xs text-squid-ink/50 mb-3">The people who keep showing up make this community</p>
+          <ul className="space-y-2.5">
+            {REGULARS.map((r, i) => (
+              <li key={r.n} className="flex items-center gap-3">
+                <span className="text-lg w-6 text-center">{medals[i]}</span>
+                <Avatar person={r} size="w-9 h-9" ring="" />
+                <p className="font-bold text-sm">{r.n}</p>
+                <span className="ml-auto text-xs font-semibold text-squid-ink/55">{r.weeks} weeks straight</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    }
+
+    /* ───────────────────────── bottom tab bar (mobile) ───────────────────────── */
+
+    function BottomTabBar() {
+      const tabs = [
+        { id: 'home', label: 'Home', icon: '🏠' },
+        { id: 'events', label: 'Events', icon: '🗓️' },
+        { id: 'people', label: 'People', icon: '👥' },
+        { id: 'profile', label: 'Profile', icon: '🙂' },
+      ];
+      const [active, setActive] = useState('home');
+      return (
+        <nav className="lg:hidden fixed bottom-0 inset-x-0 z-30 bg-white/95 backdrop-blur border-t border-black/5
+                        pb-[env(safe-area-inset-bottom)]">
+          <div className="grid grid-cols-4">
+            {tabs.map(t => (
+              <button key={t.id} onClick={() => setActive(t.id)}
+                className={`py-2.5 flex flex-col items-center gap-0.5 transition
+                  ${active === t.id ? 'text-squid-rose' : 'text-squid-ink/45'}`}>
+                <span className="text-xl leading-none">{t.icon}</span>
+                <span className="text-[11px] font-bold">{t.label}</span>
+              </button>
+            ))}
+          </div>
+        </nav>
+      );
+    }
+
+    /* ───────────────────────── page ───────────────────────── */
+
+    function App() {
+      return (
+        <div className="min-h-screen">
+          <TopBar />
+
+          <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6 pb-28 lg:pb-10
+                           lg:grid lg:grid-cols-[1fr_340px] lg:gap-6 lg:items-start">
+            {/* main column */}
+            <div className="space-y-6">
+              <NextGatheringHero />
+              <Reconnect />
+              <Recap />
+              <Feed />
+            </div>
+
+            {/* right rail (desktop) — flows below the main column on mobile */}
+            <aside className="space-y-5 mt-6 lg:mt-0 lg:sticky lg:top-20">
+              <BelongingCard />
+              <MyCrew />
+              <Regulars />
+              <p className="text-center text-[11px] text-squid-ink/35 px-2">
+                Squid Games @ Stanford · Every Saturday at 3 PM<br />
+                LG U+ Lifestyle Innovation Workshop
+              </p>
+            </aside>
+          </main>
+
+          <BottomTabBar />
+        </div>
+      );
+    }
+
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
+</body>
+</html>
